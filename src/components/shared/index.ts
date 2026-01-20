@@ -20,3 +20,7 @@ export type { StatusBadgeProps } from "./status-badge"
 
 export { LoadingSpinner } from "./loading-spinner"
 
+export { BreadcrumbNav } from "./breadcrumb-nav"
+
+export { ThemeToggle } from "./theme-toggle"
+
