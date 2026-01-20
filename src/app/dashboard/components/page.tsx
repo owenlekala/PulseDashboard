@@ -12,8 +12,16 @@ import {
   NotificationsSheet,
   toast,
 } from "@/components/shared"
+import {
+  GlassCard,
+  GlassCardContent,
+  GlassCardDescription,
+  GlassCardHeader,
+  GlassCardTitle,
+} from "@/components/shared/glass-card"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import {
   Plus,
@@ -25,6 +33,7 @@ import {
   Package,
   FileText,
   Settings,
+  TrendingUp,
 } from "lucide-react"
 import type { Notification } from "@/components/shared"
 
@@ -370,52 +379,121 @@ export default function ComponentsPage() {
         </CardContent>
       </Card>
 
-      {/* Card Examples */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Card Component</CardTitle>
-          <CardDescription>
-            Standard card styling used throughout the project
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <p className="text-sm font-medium">Card Features:</p>
-            <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
-              <li>Rounded corners (rounded-lg)</li>
-              <li>Border with theme-aware colors</li>
-              <li>Background using card CSS variable</li>
-              <li>Subtle shadow (shadow-sm)</li>
-              <li>Smooth transitions</li>
+      {/* Glass Card Examples */}
+      <div className="space-y-4">
+        <h2 className="text-2xl font-semibold">Glass Card Component</h2>
+        <p className="text-muted-foreground">
+          A 2-tone "soft glass / dark elevation" card with gradient background and inset shadows
+        </p>
+      </div>
+
+      {/* Example: Glass Card with Stats */}
+      <div className="grid gap-4 md:grid-cols-3">
+        <GlassCard outerTitle="Users">
+          <GlassCardContent>
+            <GlassCardHeader>
+              <GlassCardTitle className="flex items-center justify-between">
+                Total Users
+                <Badge
+                  variant="outline"
+                  className="text-emerald-400 bg-emerald-500/10 border-none"
+                >
+                  <TrendingUp className="h-3 w-3 mr-1" />
+                  +12%
+                </Badge>
+              </GlassCardTitle>
+              <GlassCardDescription>Active users this month</GlassCardDescription>
+            </GlassCardHeader>
+            <div className="text-3xl font-bold text-card-foreground">2,847</div>
+            <p className="text-xs text-muted-foreground mt-2">
+              +234 from last month
+            </p>
+          </GlassCardContent>
+        </GlassCard>
+
+        <GlassCard outerTitle="Revenue">
+          <GlassCardContent>
+            <GlassCardHeader>
+              <GlassCardTitle className="flex items-center justify-between">
+                Revenue
+                <Badge
+                  variant="outline"
+                  className="text-emerald-400 bg-emerald-500/10 border-none"
+                >
+                  <TrendingUp className="h-3 w-3 mr-1" />
+                  +8.2%
+                </Badge>
+              </GlassCardTitle>
+              <GlassCardDescription>Total revenue this quarter</GlassCardDescription>
+            </GlassCardHeader>
+            <div className="text-3xl font-bold text-card-foreground">$45,231</div>
+            <p className="text-xs text-muted-foreground mt-2">
+              +$3,421 from last quarter
+            </p>
+          </GlassCardContent>
+        </GlassCard>
+
+        <GlassCard outerTitle="Orders">
+          <GlassCardContent>
+            <GlassCardHeader>
+              <GlassCardTitle className="flex items-center justify-between">
+                Orders
+                <Badge
+                  variant="outline"
+                  className="text-emerald-400 bg-emerald-500/10 border-none"
+                >
+                  <TrendingUp className="h-3 w-3 mr-1" />
+                  +5.2%
+                </Badge>
+              </GlassCardTitle>
+              <GlassCardDescription>Orders processed today</GlassCardDescription>
+            </GlassCardHeader>
+            <div className="text-3xl font-bold text-card-foreground">1,429</div>
+            <p className="text-xs text-muted-foreground mt-2">
+              +31 from yesterday
+            </p>
+          </GlassCardContent>
+        </GlassCard>
+      </div>
+
+      {/* Example: Glass Card with Content */}
+      <GlassCard outerTitle="Example">
+        <GlassCardContent>
+          <GlassCardHeader>
+            <GlassCardTitle>Glass Card Example</GlassCardTitle>
+            <GlassCardDescription>
+              This card demonstrates the soft glass / dark elevation styling
+            </GlassCardDescription>
+          </GlassCardHeader>
+          <div className="space-y-4">
+            <p className="text-card-foreground/80">
+              This card features a 2-tone structure with:
+            </p>
+            <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+              <li>Outer container with subtle shadow</li>
+              <li>Inner surface with gradient (top → bottom)</li>
+              <li>Inset shadow for depth</li>
+              <li>Hairline border effect</li>
+              <li>Theme-aware colors</li>
             </ul>
           </div>
-          <Separator />
-          <div className="space-y-2">
-            <p className="text-sm font-medium">Usage Pattern:</p>
-            <pre className="bg-muted p-4 rounded-md text-xs overflow-x-auto">
-{`<Card>
-  <CardHeader>
-    <CardTitle>Title</CardTitle>
-    <CardDescription>Description</CardDescription>
-  </CardHeader>
-  <CardContent>
-    {/* Your content */}
-  </CardContent>
-  <CardFooter>
-    {/* Optional footer */}
-  </CardFooter>
-</Card>`}
-            </pre>
-          </div>
-          <Separator />
-          <div className="space-y-2">
-            <p className="text-sm font-medium">Always import from:</p>
-            <code className="text-xs bg-muted px-2 py-1 rounded">
-              @/components/ui/card
-            </code>
-          </div>
-        </CardContent>
-      </Card>
+        </GlassCardContent>
+      </GlassCard>
+
+      {/* Example: Elevated Glass Card */}
+      <GlassCard outerTitle="Elevated" variant="elevated">
+        <GlassCardContent>
+          <GlassCardHeader>
+            <GlassCardTitle>Elevated Glass Card</GlassCardTitle>
+            <GlassCardDescription>
+              This card uses the elevated variant for more prominence
+            </GlassCardDescription>
+          </GlassCardHeader>
+          <p className="text-card-foreground/80">
+            The elevated variant adds additional shadow for a more prominent appearance.
+          </p>
+        </GlassCardContent>
+      </GlassCard>
     </div>
   )
 }
