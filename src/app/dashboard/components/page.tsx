@@ -369,6 +369,53 @@ export default function ComponentsPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Card Examples */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Card Component</CardTitle>
+          <CardDescription>
+            Standard card styling used throughout the project
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <p className="text-sm font-medium">Card Features:</p>
+            <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
+              <li>Rounded corners (rounded-lg)</li>
+              <li>Border with theme-aware colors</li>
+              <li>Background using card CSS variable</li>
+              <li>Subtle shadow (shadow-sm)</li>
+              <li>Smooth transitions</li>
+            </ul>
+          </div>
+          <Separator />
+          <div className="space-y-2">
+            <p className="text-sm font-medium">Usage Pattern:</p>
+            <pre className="bg-muted p-4 rounded-md text-xs overflow-x-auto">
+{`<Card>
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description</CardDescription>
+  </CardHeader>
+  <CardContent>
+    {/* Your content */}
+  </CardContent>
+  <CardFooter>
+    {/* Optional footer */}
+  </CardFooter>
+</Card>`}
+            </pre>
+          </div>
+          <Separator />
+          <div className="space-y-2">
+            <p className="text-sm font-medium">Always import from:</p>
+            <code className="text-xs bg-muted px-2 py-1 rounded">
+              @/components/ui/card
+            </code>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }

@@ -102,42 +102,46 @@ export function NotificationsSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:max-w-md">
-        <SheetHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <SheetTitle>Notifications</SheetTitle>
-              <SheetDescription>
-                {unreadCount > 0
-                  ? `${unreadCount} unread notification${unreadCount !== 1 ? "s" : ""}`
-                  : "All caught up!"}
-              </SheetDescription>
+      <SheetContent side="right" className="w-full sm:max-w-md p-0">
+        <div className="px-6 pt-6">
+          <SheetHeader className="p-0">
+            <div className="flex items-start justify-between gap-4 pr-10">
+              <div className="flex-1 min-w-0">
+                <SheetTitle>Notifications</SheetTitle>
+                <SheetDescription>
+                  {unreadCount > 0
+                    ? `${unreadCount} unread notification${unreadCount !== 1 ? "s" : ""}`
+                    : "All caught up!"}
+                </SheetDescription>
+              </div>
+              {hasNotifications && unreadCount > 0 && onMarkAllAsRead && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onMarkAllAsRead}
+                  className="h-8 shrink-0"
+                >
+                  <CheckCheck className="mr-2 h-4 w-4" />
+                  <span className="hidden sm:inline">Mark all read</span>
+                  <span className="sm:hidden">All</span>
+                </Button>
+              )}
             </div>
-            {hasNotifications && unreadCount > 0 && onMarkAllAsRead && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onMarkAllAsRead}
-                className="h-8"
-              >
-                <CheckCheck className="mr-2 h-4 w-4" />
-                Mark all read
-              </Button>
-            )}
-          </div>
-        </SheetHeader>
+          </SheetHeader>
+        </div>
 
         <ScrollArea className="mt-6 h-[calc(100vh-8rem)]">
-          {!hasNotifications ? (
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-              <Bell className="mb-4 h-12 w-12 text-muted-foreground" />
-              <h3 className="mb-2 text-lg font-semibold">No notifications</h3>
-              <p className="text-sm text-muted-foreground">
-                You're all caught up! Check back later for updates.
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-2">
+          <div className="px-6 pb-6">
+            {!hasNotifications ? (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <Bell className="mb-4 h-12 w-12 text-muted-foreground" />
+                <h3 className="mb-2 text-lg font-semibold">No notifications</h3>
+                <p className="text-sm text-muted-foreground">
+                  You're all caught up! Check back later for updates.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-2">
               {notifications.map((notification) => {
                 const Icon = getNotificationIcon(notification.type)
                 const iconColor = getNotificationColor(notification.type)
@@ -208,8 +212,9 @@ export function NotificationsSheet({
                   </div>
                 )
               })}
-            </div>
-          )}
+              </div>
+            )}
+          </div>
         </ScrollArea>
       </SheetContent>
     </Sheet>

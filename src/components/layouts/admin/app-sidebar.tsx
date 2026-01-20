@@ -8,6 +8,7 @@ import {
   Send,
   Users,
   Component,
+  BarChart3,
 } from "lucide-react"
 
 import { NavMain } from "@/components/layouts/admin/nav-main"
@@ -46,6 +47,11 @@ const data = {
       title: "Components",
       url: "/dashboard/components",
       icon: Component,
+    },
+    {
+      title: "Charts",
+      url: "/dashboard/charts",
+      icon: BarChart3,
     },
   ],
   navSecondary: [
