@@ -18,11 +18,15 @@ import {
   GlassCardDescription,
   GlassCardHeader,
   GlassCardTitle,
-} from "@/components/shared/glass-card"
+} from "@/components/ui/glass-card"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import { DatePicker } from "@/components/ui/date-picker"
+import { DateTimePicker } from "@/components/ui/date-time-picker"
+import { DateRangePicker } from "@/components/ui/date-range-picker"
+import type { DateRange } from "react-day-picker"
 import {
   Plus,
   Trash2,
@@ -43,6 +47,9 @@ export default function ComponentsPage() {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
   const [notificationsOpen, setNotificationsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
+  const [selectedDateTime, setSelectedDateTime] = useState<Date | undefined>(undefined)
+  const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(undefined)
 
   const demoNotifications: Notification[] = [
     {
@@ -492,6 +499,122 @@ export default function ComponentsPage() {
           <p className="text-card-foreground/80">
             The elevated variant adds additional shadow for a more prominent appearance.
           </p>
+        </GlassCardContent>
+      </GlassCard>
+
+      {/* Example: Date Picker */}
+      <GlassCard outerTitle="Form Components">
+        <GlassCardContent>
+          <GlassCardHeader>
+            <GlassCardTitle>Date Picker</GlassCardTitle>
+            <GlassCardDescription>
+              A date picker component with calendar popover and input field
+            </GlassCardDescription>
+          </GlassCardHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-card-foreground">
+                Select a date
+              </label>
+              <DatePicker
+                placeholder="Pick a date"
+                value={selectedDate}
+                onChange={(date) => {
+                  setSelectedDate(date)
+                  if (date) {
+                    toast.success(`Selected date: ${date.toLocaleDateString()}`)
+                  }
+                }}
+              />
+            </div>
+            {selectedDate && (
+              <p className="text-sm text-muted-foreground">
+                Selected: {selectedDate.toLocaleDateString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+            )}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-card-foreground">
+                Disabled date picker
+              </label>
+              <DatePicker
+                placeholder="Disabled picker"
+                disabled
+              />
+            </div>
+          </div>
+        </GlassCardContent>
+      </GlassCard>
+
+      {/* Example: Date Time Picker */}
+      <GlassCard outerTitle="Form Components">
+        <GlassCardContent>
+          <GlassCardHeader>
+            <GlassCardTitle>Date &amp; Time Picker</GlassCardTitle>
+            <GlassCardDescription>
+              Select a date and time in a single control
+            </GlassCardDescription>
+          </GlassCardHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-card-foreground">
+                Select date &amp; time
+              </label>
+              <DateTimePicker
+                value={selectedDateTime}
+                onChange={(dt) => {
+                  setSelectedDateTime(dt)
+                  if (dt) toast.success(`Selected: ${dt.toLocaleString()}`)
+                }}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-card-foreground">
+                Disabled date &amp; time picker
+              </label>
+              <DateTimePicker disabled />
+            </div>
+          </div>
+        </GlassCardContent>
+      </GlassCard>
+
+      {/* Example: Date Range Picker */}
+      <GlassCard outerTitle="Form Components">
+        <GlassCardContent>
+          <GlassCardHeader>
+            <GlassCardTitle>Date Range Picker</GlassCardTitle>
+            <GlassCardDescription>
+              Select a start and end date (range)
+            </GlassCardDescription>
+          </GlassCardHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-card-foreground">
+                Select a date range
+              </label>
+              <DateRangePicker
+                value={selectedRange}
+                onChange={(range) => {
+                  setSelectedRange(range)
+                  if (range?.from && range?.to) {
+                    toast.success(
+                      `Range: ${range.from.toLocaleDateString()} – ${range.to.toLocaleDateString()}`
+                    )
+                  }
+                }}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-card-foreground">
+                Disabled date range picker
+              </label>
+              <DateRangePicker disabled />
+            </div>
+          </div>
         </GlassCardContent>
       </GlassCard>
     </div>

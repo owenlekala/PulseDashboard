@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/table"
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { GlassCard, GlassCardContent } from "@/components/shared/glass-card"
+import { GlassCard, GlassCardContent } from "@/components/ui/glass-card"
 import { ButtonGroup } from "@/components/ui/button-group"
 
 // Helper function to get nested object values
