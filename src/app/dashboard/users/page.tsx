@@ -176,19 +176,19 @@ export default function UsersPage() {
           {
             label: "Activate",
             action: "activate",
-            icon: <CheckCircle className="mr-2 h-4 w-4" />,
+            icon: <CheckCircle className="mr-1.5 h-3.5 w-3.5" />,
             variant: "outline",
           },
           {
             label: "Suspend",
             action: "suspend",
-            icon: <Ban className="mr-2 h-4 w-4" />,
+            icon: <Ban className="mr-1.5 h-3.5 w-3.5" />,
             variant: "outline",
           },
           {
             label: "Delete",
             action: "delete",
-            icon: <Trash2 className="mr-2 h-4 w-4" />,
+            icon: <Trash2 className="mr-1.5 h-3.5 w-3.5" />,
             variant: "destructive",
           },
         ]}

@@ -39,7 +39,7 @@ const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
           )}
         >
           {outerTitle && (
-            <div className="px-6 pt-4 pb-2">
+            <div className="px-4 pt-4 pb-2">
               <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 {outerTitle}
               </p>
