@@ -10,6 +10,8 @@ import {
   StatusBadge,
   LoadingSpinner,
   NotificationsSheet,
+  DocumentUploadDialog,
+  DocumentPreviewDialog,
   toast,
 } from "@/components/shared"
 import {
@@ -27,6 +29,7 @@ import { DatePicker } from "@/components/ui/date-picker"
 import { DateTimePicker } from "@/components/ui/date-time-picker"
 import { DateRangePicker } from "@/components/ui/date-range-picker"
 import type { DateRange } from "react-day-picker"
+import type { DocumentPreviewDialogProps } from "@/components/shared/document-preview-dialog"
 import {
   Plus,
   Trash2,
@@ -50,6 +53,9 @@ export default function ComponentsPage() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
   const [selectedDateTime, setSelectedDateTime] = useState<Date | undefined>(undefined)
   const [selectedRange, setSelectedRange] = useState<DateRange | undefined>(undefined)
+  const [uploadOpen, setUploadOpen] = useState(false)
+  const [previewOpen, setPreviewOpen] = useState(false)
+  const [previewSource, setPreviewSource] = useState<DocumentPreviewDialogProps["source"]>(null)
 
   const demoNotifications: Notification[] = [
     {
@@ -615,6 +621,55 @@ export default function ComponentsPage() {
               <DateRangePicker disabled />
             </div>
           </div>
+        </GlassCardContent>
+      </GlassCard>
+
+      {/* Example: Document Upload + Preview (Dialogs) */}
+      <GlassCard outerTitle="Dialogs">
+        <GlassCardContent>
+          <GlassCardHeader>
+            <GlassCardTitle>Document Upload &amp; Preview</GlassCardTitle>
+            <GlassCardDescription>
+              Upload a document and preview it in a dialog.
+            </GlassCardDescription>
+          </GlassCardHeader>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" onClick={() => setUploadOpen(true)}>
+              Upload document
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                // Demo: preview a sample URL (PDF/image links depend on deployment),
+                // so we show an empty-state preview if no source is set.
+                setPreviewSource(null)
+                setPreviewOpen(true)
+              }}
+            >
+              Open preview dialog
+            </Button>
+          </div>
+
+          <DocumentUploadDialog
+            open={uploadOpen}
+            onOpenChange={setUploadOpen}
+            title="Upload document"
+            description="Choose a file to upload. After selecting, we'll open a preview."
+            multiple={false}
+            onUpload={async (files) => {
+              const file = files[0]
+              setPreviewSource({ kind: "file", file })
+              setPreviewOpen(true)
+              toast.success("File selected")
+            }}
+          />
+
+          <DocumentPreviewDialog
+            open={previewOpen}
+            onOpenChange={setPreviewOpen}
+            title="Document preview"
+            source={previewSource}
+          />
         </GlassCardContent>
       </GlassCard>
     </div>

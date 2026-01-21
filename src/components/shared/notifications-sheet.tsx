@@ -4,6 +4,7 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
@@ -114,23 +115,11 @@ export function NotificationsSheet({
                     : "All caught up!"}
                 </SheetDescription>
               </div>
-              {hasNotifications && unreadCount > 0 && onMarkAllAsRead && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={onMarkAllAsRead}
-                  className="h-8 shrink-0"
-                >
-                  <CheckCheck className="mr-2 h-4 w-4" />
-                  <span className="hidden sm:inline">Mark all read</span>
-                  <span className="sm:hidden">All</span>
-                </Button>
-              )}
             </div>
           </SheetHeader>
         </div>
 
-        <ScrollArea className="mt-6 h-[calc(100vh-8rem)]">
+        <ScrollArea className="mt-6 flex-1">
           <div className="px-6 pb-6">
             {!hasNotifications ? (
               <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -216,6 +205,20 @@ export function NotificationsSheet({
             )}
           </div>
         </ScrollArea>
+
+        {hasNotifications && unreadCount > 0 && onMarkAllAsRead && (
+          <SheetFooter className="px-6 py-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={onMarkAllAsRead}
+              className="h-9 w-full justify-center"
+            >
+              <CheckCheck className="mr-2 h-4 w-4" />
+              Mark all as read
+            </Button>
+          </SheetFooter>
+        )}
       </SheetContent>
     </Sheet>
   )

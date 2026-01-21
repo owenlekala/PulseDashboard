@@ -24,3 +24,6 @@ export { BreadcrumbNav } from "./breadcrumb-nav"
 
 export { ThemeToggle } from "./theme-toggle"
 
+export { DocumentUploadDialog } from "./document-upload-dialog"
+export { DocumentPreviewDialog } from "./document-preview-dialog"
+
