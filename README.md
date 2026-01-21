@@ -2,6 +2,8 @@
 
 A modern, comprehensive dashboard application built with Next.js, TypeScript, and Tailwind CSS. Pulse Dashboard provides a beautiful and intuitive interface for managing and monitoring business metrics.
 
+![Dashboard Screenshot](./public/dashbaord.png)
+
 ## Features
 
 - 🎨 **Modern UI** - Built with shadcn/ui components and Tailwind CSS
