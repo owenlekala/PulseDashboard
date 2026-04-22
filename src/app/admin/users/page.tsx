@@ -1,12 +1,20 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
+import type { DateRange } from "react-day-picker"
 import { ColumnDef } from "@tanstack/react-table"
 import { DataTable } from "@/components/ui/datatable"
-import { PageHeader } from "@/components/shared/page-header"
+import { EmptyState, PageHeader } from "@/components/shared"
 import { StatusBadge } from "@/components/shared/status-badge"
 import { Button } from "@/components/ui/button"
-import { MoreHorizontal, Trash2, Ban, CheckCircle, UserPlus } from "lucide-react"
+import {
+  MoreHorizontal,
+  Trash2,
+  Ban,
+  CheckCircle,
+  UserPlus,
+  UserSearch,
+} from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,8 +23,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { demoUsers, type DemoUser } from "@/data/demo-table-data"
+import {
+  demoUserDepartments,
+  demoUserRoles,
+  demoUsers,
+  type DemoUser,
+} from "@/data/demo-table-data"
 import { toast } from "@/components/shared/toast"
+import {
+  type UserFiltersValue,
+  UsersFilters,
+} from "@/components/admin/users/users-filters"
+import { UserDetailsDrawer } from "@/components/admin/users/user-details-drawer"
+import {
+  type UserSegment,
+  UsersSegmentTabs,
+} from "@/components/admin/users/users-segment-tabs"
+import { UsersSummaryCards } from "@/components/admin/users/users-summary-cards"
 
 const columns: ColumnDef<DemoUser>[] = [
   {
@@ -80,8 +103,17 @@ const columns: ColumnDef<DemoUser>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
       const user = row.original
+      const meta = table.options.meta as
+        | {
+            onViewUser: (user: DemoUser) => void
+            onQuickAction: (
+              action: "activate" | "suspend" | "delete",
+              user: DemoUser
+            ) => void
+          }
+        | undefined
 
       return (
         <DropdownMenu>
@@ -97,10 +129,25 @@ const columns: ColumnDef<DemoUser>[] = [
               Copy user ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View details</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => meta?.onViewUser(user)}>
+              View details
+            </DropdownMenuItem>
             <DropdownMenuItem>Edit user</DropdownMenuItem>
+            {user.status !== "active" ? (
+              <DropdownMenuItem onClick={() => meta?.onQuickAction("activate", user)}>
+                Activate user
+              </DropdownMenuItem>
+            ) : null}
+            {user.status !== "suspended" ? (
+              <DropdownMenuItem onClick={() => meta?.onQuickAction("suspend", user)}>
+                Suspend user
+              </DropdownMenuItem>
+            ) : null}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive">
+            <DropdownMenuItem
+              className="text-destructive"
+              onClick={() => meta?.onQuickAction("delete", user)}
+            >
               Delete user
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -112,6 +159,66 @@ const columns: ColumnDef<DemoUser>[] = [
 
 export default function UsersPage() {
   const [data, setData] = useState(demoUsers)
+  const [selectedUser, setSelectedUser] = useState<DemoUser | null>(null)
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false)
+  const [activeSegment, setActiveSegment] = useState<UserSegment>("all")
+  const [filters, setFilters] = useState<UserFiltersValue>({
+    query: "",
+    status: "all",
+    department: "all",
+    role: "all",
+    dateRange: undefined,
+  })
+
+  const counts = useMemo<Record<UserSegment, number>>(
+    () => ({
+      all: data.length,
+      active: data.filter((user) => user.status === "active").length,
+      pending: data.filter((user) => user.status === "pending").length,
+      suspended: data.filter((user) => user.status === "suspended").length,
+      inactive: data.filter((user) => user.status === "inactive").length,
+    }),
+    [data]
+  )
+
+  const filteredData = useMemo(() => {
+    return data.filter((user) => {
+      const matchesSegment =
+        activeSegment === "all" || user.status === activeSegment
+
+      const matchesQuery =
+        filters.query.trim() === "" ||
+        [
+          user.name,
+          user.email,
+          user.phone,
+          user.location,
+          user.manager,
+        ]
+          .join(" ")
+          .toLowerCase()
+          .includes(filters.query.toLowerCase())
+
+      const matchesStatus =
+        filters.status === "all" || user.status === filters.status
+
+      const matchesDepartment =
+        filters.department === "all" || user.department === filters.department
+
+      const matchesRole = filters.role === "all" || user.role === filters.role
+
+      const matchesDateRange = isWithinDateRange(user.joinDate, filters.dateRange)
+
+      return (
+        matchesSegment &&
+        matchesQuery &&
+        matchesStatus &&
+        matchesDepartment &&
+        matchesRole &&
+        matchesDateRange
+      )
+    })
+  }, [activeSegment, data, filters])
 
   const handleBulkAction = (action: string, selectedRows: DemoUser[]) => {
     const userIds = selectedRows.map((row) => row.id)
@@ -147,7 +254,26 @@ export default function UsersPage() {
   }
 
   const handleRowClick = (row: DemoUser) => {
-    toast.info(`Clicked on user: ${row.name}`)
+    setSelectedUser(row)
+    setIsDetailsOpen(true)
+  }
+
+  const handleQuickAction = (
+    action: "activate" | "suspend" | "delete",
+    user: DemoUser
+  ) => {
+    handleBulkAction(action, [user])
+  }
+
+  const resetFilters = () => {
+    setFilters({
+      query: "",
+      status: "all",
+      department: "all",
+      role: "all",
+      dateRange: undefined,
+    })
+    setActiveSegment("all")
   }
 
   return (
@@ -161,11 +287,24 @@ export default function UsersPage() {
           icon: UserPlus,
         }}
       />
+      <UsersSummaryCards counts={counts} />
+      <UsersSegmentTabs
+        value={activeSegment}
+        counts={counts}
+        onValueChange={setActiveSegment}
+      />
+      <UsersFilters
+        value={filters}
+        departments={demoUserDepartments}
+        roles={demoUserRoles}
+        onChange={setFilters}
+        onReset={resetFilters}
+      />
       <DataTable
         columns={columns}
-        data={data}
+        data={filteredData}
         searchPlaceholder="Search users by name, email, or department..."
-        searchFields={["name", "email", "department"]}
+        searchFields={["name", "email", "department", "phone", "location"]}
         statusFilterOptions={[
           { value: "active", label: "Active" },
           { value: "inactive", label: "Inactive" },
@@ -195,8 +334,63 @@ export default function UsersPage() {
         onBulkAction={handleBulkAction}
         onExport={handleExport}
         onRowClick={handleRowClick}
+        meta={{
+          onViewUser: handleRowClick,
+          onQuickAction: handleQuickAction,
+        }}
+        emptyState={
+          <EmptyState
+            icon={UserSearch}
+            title="No users match these filters"
+            description="Try a different segment or reset the current filters to bring matching users back into view."
+            action={{
+              label: "Reset filters",
+              onClick: resetFilters,
+            }}
+            className="py-10"
+          />
+        }
+      />
+      <UserDetailsDrawer
+        user={selectedUser}
+        open={isDetailsOpen}
+        onOpenChange={setIsDetailsOpen}
       />
     </div>
   )
 }
 
+function isWithinDateRange(
+  value: string,
+  range: DateRange | undefined
+) {
+  if (!range?.from && !range?.to) {
+    return true
+  }
+
+  const current = new Date(value)
+  const start = range.from ? startOfDay(range.from) : undefined
+  const end = range.to ? endOfDay(range.to) : start
+
+  if (start && current < start) {
+    return false
+  }
+
+  if (end && current > end) {
+    return false
+  }
+
+  return true
+}
+
+function startOfDay(value: Date) {
+  const date = new Date(value)
+  date.setHours(0, 0, 0, 0)
+  return date
+}
+
+function endOfDay(value: Date) {
+  const date = new Date(value)
+  date.setHours(23, 59, 59, 999)
+  return date
+}

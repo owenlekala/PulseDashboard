@@ -44,7 +44,7 @@ export default function Error({
             Try again
           </Button>
           <Button asChild variant="outline" className="gap-2">
-            <Link href="/dashboard">
+            <Link href="/admin">
               <Home className="h-4 w-4" />
               Go to Dashboard
             </Link>
@@ -59,4 +59,3 @@ export default function Error({
     </div>
   )
 }
-

@@ -7,6 +7,11 @@ export interface DemoUser {
   department: string
   joinDate: string
   lastActive: string
+  location: string
+  phone: string
+  manager: string
+  completionRate: number
+  ticketsResolved: number
 }
 
 export const demoUsers: DemoUser[] = [
@@ -19,6 +24,11 @@ export const demoUsers: DemoUser[] = [
     department: "Engineering",
     joinDate: "2023-01-15",
     lastActive: "2024-01-20",
+    location: "Cape Town",
+    phone: "+27 82 555 0101",
+    manager: "Olivia Carter",
+    completionRate: 92,
+    ticketsResolved: 48,
   },
   {
     id: "2",
@@ -29,6 +39,11 @@ export const demoUsers: DemoUser[] = [
     department: "Sales",
     joinDate: "2023-02-20",
     lastActive: "2024-01-19",
+    location: "Johannesburg",
+    phone: "+27 82 555 0102",
+    manager: "Daniel Reed",
+    completionRate: 88,
+    ticketsResolved: 35,
   },
   {
     id: "3",
@@ -39,6 +54,11 @@ export const demoUsers: DemoUser[] = [
     department: "Engineering",
     joinDate: "2023-03-10",
     lastActive: "2024-01-18",
+    location: "Remote",
+    phone: "+27 82 555 0103",
+    manager: "Olivia Carter",
+    completionRate: 95,
+    ticketsResolved: 63,
   },
   {
     id: "4",
@@ -49,6 +69,11 @@ export const demoUsers: DemoUser[] = [
     department: "Design",
     joinDate: "2024-01-05",
     lastActive: "2024-01-15",
+    location: "Durban",
+    phone: "+27 82 555 0104",
+    manager: "Maya Patel",
+    completionRate: 54,
+    ticketsResolved: 12,
   },
   {
     id: "5",
@@ -59,6 +84,11 @@ export const demoUsers: DemoUser[] = [
     department: "Engineering",
     joinDate: "2023-04-12",
     lastActive: "2024-01-20",
+    location: "Pretoria",
+    phone: "+27 82 555 0105",
+    manager: "Olivia Carter",
+    completionRate: 91,
+    ticketsResolved: 52,
   },
   {
     id: "6",
@@ -69,6 +99,11 @@ export const demoUsers: DemoUser[] = [
     department: "Marketing",
     joinDate: "2023-05-18",
     lastActive: "2024-01-19",
+    location: "Cape Town",
+    phone: "+27 82 555 0106",
+    manager: "Leah Brooks",
+    completionRate: 84,
+    ticketsResolved: 29,
   },
   {
     id: "7",
@@ -79,6 +114,11 @@ export const demoUsers: DemoUser[] = [
     department: "Finance",
     joinDate: "2023-06-22",
     lastActive: "2023-12-10",
+    location: "Johannesburg",
+    phone: "+27 82 555 0107",
+    manager: "Marcus Hill",
+    completionRate: 61,
+    ticketsResolved: 18,
   },
   {
     id: "8",
@@ -89,6 +129,11 @@ export const demoUsers: DemoUser[] = [
     department: "Engineering",
     joinDate: "2023-07-08",
     lastActive: "2024-01-20",
+    location: "Remote",
+    phone: "+27 82 555 0108",
+    manager: "Olivia Carter",
+    completionRate: 93,
+    ticketsResolved: 57,
   },
   {
     id: "9",
@@ -99,6 +144,11 @@ export const demoUsers: DemoUser[] = [
     department: "Operations",
     joinDate: "2022-11-15",
     lastActive: "2023-11-20",
+    location: "Pretoria",
+    phone: "+27 82 555 0109",
+    manager: "Priya Nair",
+    completionRate: 40,
+    ticketsResolved: 9,
   },
   {
     id: "10",
@@ -109,6 +159,11 @@ export const demoUsers: DemoUser[] = [
     department: "Design",
     joinDate: "2023-08-25",
     lastActive: "2024-01-18",
+    location: "Durban",
+    phone: "+27 82 555 0110",
+    manager: "Maya Patel",
+    completionRate: 87,
+    ticketsResolved: 31,
   },
   {
     id: "11",
@@ -119,6 +174,11 @@ export const demoUsers: DemoUser[] = [
     department: "Engineering",
     joinDate: "2023-09-14",
     lastActive: "2024-01-20",
+    location: "Johannesburg",
+    phone: "+27 82 555 0111",
+    manager: "Olivia Carter",
+    completionRate: 96,
+    ticketsResolved: 68,
   },
   {
     id: "12",
@@ -129,6 +189,11 @@ export const demoUsers: DemoUser[] = [
     department: "Sales",
     joinDate: "2023-10-30",
     lastActive: "2024-01-19",
+    location: "Cape Town",
+    phone: "+27 82 555 0112",
+    manager: "Daniel Reed",
+    completionRate: 85,
+    ticketsResolved: 33,
   },
   {
     id: "13",
@@ -139,6 +204,11 @@ export const demoUsers: DemoUser[] = [
     department: "Finance",
     joinDate: "2024-01-10",
     lastActive: "2024-01-17",
+    location: "Remote",
+    phone: "+27 82 555 0113",
+    manager: "Marcus Hill",
+    completionRate: 58,
+    ticketsResolved: 14,
   },
   {
     id: "14",
@@ -149,6 +219,11 @@ export const demoUsers: DemoUser[] = [
     department: "Design",
     joinDate: "2023-11-05",
     lastActive: "2024-01-18",
+    location: "Pretoria",
+    phone: "+27 82 555 0114",
+    manager: "Maya Patel",
+    completionRate: 89,
+    ticketsResolved: 27,
   },
   {
     id: "15",
@@ -159,6 +234,11 @@ export const demoUsers: DemoUser[] = [
     department: "Sales",
     joinDate: "2022-12-01",
     lastActive: "2024-01-20",
+    location: "Johannesburg",
+    phone: "+27 82 555 0115",
+    manager: "Daniel Reed",
+    completionRate: 90,
+    ticketsResolved: 41,
   },
   {
     id: "16",
@@ -169,6 +249,11 @@ export const demoUsers: DemoUser[] = [
     department: "Engineering",
     joinDate: "2023-12-15",
     lastActive: "2024-01-19",
+    location: "Cape Town",
+    phone: "+27 82 555 0116",
+    manager: "Olivia Carter",
+    completionRate: 86,
+    ticketsResolved: 22,
   },
   {
     id: "17",
@@ -179,6 +264,11 @@ export const demoUsers: DemoUser[] = [
     department: "Finance",
     joinDate: "2023-01-20",
     lastActive: "2023-11-25",
+    location: "Durban",
+    phone: "+27 82 555 0117",
+    manager: "Marcus Hill",
+    completionRate: 63,
+    ticketsResolved: 16,
   },
   {
     id: "18",
@@ -189,6 +279,11 @@ export const demoUsers: DemoUser[] = [
     department: "Design",
     joinDate: "2023-02-28",
     lastActive: "2024-01-17",
+    location: "Remote",
+    phone: "+27 82 555 0118",
+    manager: "Maya Patel",
+    completionRate: 82,
+    ticketsResolved: 24,
   },
   {
     id: "19",
@@ -199,6 +294,11 @@ export const demoUsers: DemoUser[] = [
     department: "Engineering",
     joinDate: "2022-09-10",
     lastActive: "2023-10-15",
+    location: "Pretoria",
+    phone: "+27 82 555 0119",
+    manager: "Olivia Carter",
+    completionRate: 38,
+    ticketsResolved: 7,
   },
   {
     id: "20",
@@ -209,6 +309,18 @@ export const demoUsers: DemoUser[] = [
     department: "Marketing",
     joinDate: "2023-03-22",
     lastActive: "2024-01-20",
+    location: "Cape Town",
+    phone: "+27 82 555 0120",
+    manager: "Leah Brooks",
+    completionRate: 83,
+    ticketsResolved: 26,
   },
 ]
 
+export const demoUserDepartments = Array.from(
+  new Set(demoUsers.map((user) => user.department))
+)
+
+export const demoUserRoles = Array.from(
+  new Set(demoUsers.map((user) => user.role))
+)

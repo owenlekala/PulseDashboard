@@ -31,14 +31,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { GlassCard, GlassCardContent } from "@/components/ui/glass-card"
 import { ButtonGroup } from "@/components/ui/button-group"
 
 // Helper function to get nested object values
-const getNestedValue = (obj: any, path: string) => {
-  return path.split('.').reduce((current, key) => current?.[key], obj)
+const getNestedValue = (obj: Record<string, unknown>, path: string) => {
+  return path.split(".").reduce<unknown>((current, key) => {
+    if (current && typeof current === "object" && key in current) {
+      return (current as Record<string, unknown>)[key]
+    }
+
+    return undefined
+  }, obj)
 }
 
 interface DataTableProps<TData, TValue> {
@@ -61,7 +66,8 @@ interface DataTableProps<TData, TValue> {
     value: string
     label: string
   }>
-  meta?: any
+  meta?: Record<string, unknown>
+  emptyState?: React.ReactNode
 }
 
 export function DataTable<TData, TValue>({
@@ -77,6 +83,7 @@ export function DataTable<TData, TValue>({
   onRowClick,
   statusFilterOptions,
   meta,
+  emptyState,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -97,7 +104,7 @@ export function DataTable<TData, TValue>({
     onRowSelectionChange: setRowSelection,
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn: (row, columnId, value) => {
-      const item = row.original as any
+      const item = row.original as Record<string, unknown>
       const searchValue = value.toLowerCase()
       
       // If searchFields are provided, use them; otherwise use a generic approach
@@ -111,8 +118,8 @@ export function DataTable<TData, TValue>({
       
       // Fallback: search all string values in the object
       const searchableFields = Object.values(item)
-        .filter(val => typeof val === 'string')
-        .map(val => val.toLowerCase())
+        .filter((val): val is string => typeof val === "string")
+        .map((val) => val.toLowerCase())
       
       return searchableFields.some(field => field.includes(searchValue))
     },
@@ -155,7 +162,7 @@ export function DataTable<TData, TValue>({
                 placeholder={searchPlaceholder}
                 value={globalFilter ?? ""}
                 onChange={(event) => setGlobalFilter(event.target.value)}
-                className="h-8 w-48 pl-8 text-sm"
+                className="h-8 w-48 bg-card pl-8 text-sm"
               />
             </div>
 
@@ -288,7 +295,7 @@ export function DataTable<TData, TValue>({
 
         {/* Bulk Actions */}
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
-          <div className="flex items-center justify-between p-3 border rounded-md bg-muted/50">
+          <div className="flex items-center justify-between rounded-md border bg-muted/50 p-3">
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">
                 {table.getFilteredSelectedRowModel().rows.length} row(s) selected
@@ -423,7 +430,7 @@ export function DataTable<TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  {emptyState ?? "No results."}
                 </TableCell>
               </TableRow>
             )}

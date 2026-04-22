@@ -1,7 +1,20 @@
 "use client"
 
-import { StatCard, RevenueChart, UserGrowthChart, CategoryChart, RecentActivities, TopProducts } from "@/components/dashboard"
-import { dashboardStats } from "@/data/demo-dashboard-data"
+import {
+  ActivityTimeline,
+  CategoryChart,
+  KpiComparisonCards,
+  RecentActivities,
+  RevenueChart,
+  StatCard,
+  TopProducts,
+  UserGrowthChart,
+} from "@/components/admin/dashboard"
+import {
+  dashboardKpis,
+  dashboardStats,
+  dashboardTimeline,
+} from "@/data/demo-dashboard-data"
 
 export default function DashboardPage() {
   return (
@@ -19,12 +32,16 @@ export default function DashboardPage() {
         <UserGrowthChart />
       </div>
 
+      <KpiComparisonCards items={dashboardKpis} />
+
       {/* Bottom Row */}
       <div className="grid gap-4 md:grid-cols-3">
         <CategoryChart />
         <RecentActivities />
         <TopProducts />
       </div>
+
+      <ActivityTimeline items={dashboardTimeline} />
     </div>
   )
 }

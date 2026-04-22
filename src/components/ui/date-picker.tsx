@@ -145,47 +145,53 @@ export function DatePicker({
 
   return (
     <div className={className}>
-      <div className="relative">
-        <Input
-          id={id}
-          value={inputValue}
-          placeholder={placeholder}
-          className="bg-background pr-10"
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          onKeyDown={(e) => {
-            if (e.key === "ArrowDown") {
-              e.preventDefault()
-              setOpen(true)
-            }
-          }}
-          disabled={disabled}
-          required={required}
-        />
-        {name && (
-          <input
-            type="hidden"
-            name={name}
-            value={formValue}
-            required={required}
-          />
-        )}
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              type="button"
-              variant="ghost"
-              className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
-              disabled={disabled}
-              onClick={(e) => {
+      <Popover open={open} onOpenChange={setOpen}>
+        <div className="relative">
+          <Input
+            id={id}
+            value={inputValue}
+            placeholder={placeholder}
+            className="bg-background pr-10"
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowDown") {
                 e.preventDefault()
                 setOpen(true)
-              }}
-            >
-              <CalendarIcon className="size-3.5" />
-              <span className="sr-only">Select date</span>
-            </Button>
+              }
+            }}
+            disabled={disabled}
+            required={required}
+          />
+          {name && (
+            <input
+              type="hidden"
+              name={name}
+              value={formValue}
+              required={required}
+            />
+          )}
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              className="absolute inset-0 z-10 cursor-pointer rounded-md"
+              aria-label="Open date picker"
+              disabled={disabled}
+            />
           </PopoverTrigger>
+          <Button
+            type="button"
+            variant="ghost"
+            className="absolute top-1/2 right-2 z-20 size-6 -translate-y-1/2"
+            disabled={disabled}
+            onClick={(e) => {
+              e.preventDefault()
+              setOpen(true)
+            }}
+          >
+            <CalendarIcon className="size-3.5" />
+            <span className="sr-only">Select date</span>
+          </Button>
           <PopoverContent
             className="w-auto overflow-hidden p-0"
             align="end"
@@ -193,21 +199,20 @@ export function DatePicker({
             sideOffset={10}
           >
             <div className="w-full">
-            <Calendar
-              mode="single"
-              selected={date}
-              captionLayout="dropdown"
-              month={month}
-              onMonthChange={setMonth}
-              onSelect={handleDateSelect}
-              disabled={disabled}
-              className="w-full"
-            />
-</div>
-
+              <Calendar
+                mode="single"
+                selected={date}
+                captionLayout="dropdown"
+                month={month}
+                onMonthChange={setMonth}
+                onSelect={handleDateSelect}
+                disabled={disabled}
+                className="w-full"
+              />
+            </div>
           </PopoverContent>
-        </Popover>
-      </div>
+        </div>
+      </Popover>
     </div>
   )
 }

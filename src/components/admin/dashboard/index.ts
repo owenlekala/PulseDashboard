@@ -4,4 +4,5 @@ export { UserGrowthChart } from "./user-growth-chart"
 export { CategoryChart } from "./category-chart"
 export { RecentActivities } from "./recent-activities"
 export { TopProducts } from "./top-products"
-
+export { ActivityTimeline } from "./activity-timeline"
+export { KpiComparisonCards } from "./kpi-comparison-cards"

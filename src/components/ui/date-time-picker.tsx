@@ -102,37 +102,43 @@ export function DateTimePicker({
 
   return (
     <div className={cn("w-full", className)}>
-      <div className="relative">
-        <Input
-          value={formatDateTime(value)}
-          placeholder={placeholder}
-          className="bg-background pr-16"
-          readOnly
-          disabled={disabled}
-          required={required}
-          onKeyDown={(e) => {
-            if (e.key === "ArrowDown") {
-              e.preventDefault()
-              setOpen(true)
-            }
-          }}
-        />
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              type="button"
-              variant="ghost"
-              className="absolute top-1/2 right-2 h-6 px-2 -translate-y-1/2"
-              disabled={disabled}
-              onClick={(e) => {
+      <Popover open={open} onOpenChange={setOpen}>
+        <div className="relative">
+          <Input
+            value={formatDateTime(value)}
+            placeholder={placeholder}
+            className="bg-background pr-16 cursor-pointer"
+            readOnly
+            disabled={disabled}
+            required={required}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowDown") {
                 e.preventDefault()
                 setOpen(true)
-              }}
-            >
-              <CalendarIcon className="size-3.5" />
-              <span className="sr-only">Select date</span>
-            </Button>
+              }
+            }}
+          />
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              className="absolute inset-0 z-10 cursor-pointer rounded-md"
+              aria-label="Open date and time picker"
+              disabled={disabled}
+            />
           </PopoverTrigger>
+          <Button
+            type="button"
+            variant="ghost"
+            className="absolute top-1/2 right-2 z-20 h-6 px-2 -translate-y-1/2"
+            disabled={disabled}
+            onClick={(e) => {
+              e.preventDefault()
+              setOpen(true)
+            }}
+          >
+            <CalendarIcon className="size-3.5" />
+            <span className="sr-only">Select date</span>
+          </Button>
           <PopoverContent className="w-auto overflow-hidden p-0" align="end">
             <div className="grid gap-3 p-3">
               <Calendar
@@ -155,10 +161,8 @@ export function DateTimePicker({
               </div>
             </div>
           </PopoverContent>
-        </Popover>
-      </div>
+        </div>
+      </Popover>
     </div>
   )
 }
-
-

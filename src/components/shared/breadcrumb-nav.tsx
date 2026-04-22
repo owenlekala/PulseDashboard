@@ -31,7 +31,7 @@ export function BreadcrumbNav({ items, homeLabel = "Home" }: BreadcrumbNavProps)
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/dashboard">{homeLabel}</Link>
+              <Link href="/admin">{homeLabel}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           {items.map((item, index) => {
@@ -60,7 +60,7 @@ export function BreadcrumbNav({ items, homeLabel = "Home" }: BreadcrumbNavProps)
   const pathSegments = pathname.split("/").filter(Boolean)
   
   // Don't show breadcrumb on home page
-  if (pathname === "/" || pathname === "/dashboard") {
+  if (pathname === "/" || pathname === "/admin") {
     return (
       <Breadcrumb>
         <BreadcrumbList>
@@ -87,7 +87,7 @@ export function BreadcrumbNav({ items, homeLabel = "Home" }: BreadcrumbNavProps)
       <BreadcrumbList>
         <BreadcrumbItem className="hidden md:block">
           <BreadcrumbLink asChild>
-            <Link href="/dashboard">{homeLabel}</Link>
+            <Link href="/admin">{homeLabel}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         {breadcrumbItems.map((item, index) => (
@@ -108,4 +108,3 @@ export function BreadcrumbNav({ items, homeLabel = "Home" }: BreadcrumbNavProps)
     </Breadcrumb>
   )
 }
-

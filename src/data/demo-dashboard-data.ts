@@ -15,6 +15,25 @@ export interface ChartDataPoint {
   [key: string]: string | number
 }
 
+export interface DashboardKpi {
+  id: string
+  title: string
+  value: string
+  benchmark: string
+  delta: number
+  trend: "up" | "down"
+  detail: string
+}
+
+export interface TimelineEvent {
+  id: string
+  title: string
+  description: string
+  owner: string
+  timestamp: string
+  status: "completed" | "in_progress" | "at_risk"
+}
+
 export const dashboardStats: StatCard[] = [
   {
     title: "Total Revenue",
@@ -124,3 +143,67 @@ export const topProducts = [
   { id: "5", name: "Product E", sales: 543, revenue: "$5,430" },
 ]
 
+export const dashboardKpis: DashboardKpi[] = [
+  {
+    id: "mrr",
+    title: "Monthly Recurring Revenue",
+    value: "$82.4k",
+    benchmark: "$75k target",
+    delta: 9.8,
+    trend: "up",
+    detail: "Growth driven by enterprise upgrades in the last 30 days.",
+  },
+  {
+    id: "retention",
+    title: "Customer Retention",
+    value: "94.2%",
+    benchmark: "92% benchmark",
+    delta: 2.1,
+    trend: "up",
+    detail: "Retention held steady after onboarding flow improvements.",
+  },
+  {
+    id: "resolution",
+    title: "Support Resolution Time",
+    value: "3.8h",
+    benchmark: "Under 4h SLA",
+    delta: 6.4,
+    trend: "down",
+    detail: "A small spike came from payment escalation tickets this week.",
+  },
+]
+
+export const dashboardTimeline: TimelineEvent[] = [
+  {
+    id: "evt-1",
+    title: "Q2 growth report approved",
+    description: "Finance signed off the revised growth assumptions and export schedule.",
+    owner: "Carmen Diaz",
+    timestamp: "Today, 09:24",
+    status: "completed",
+  },
+  {
+    id: "evt-2",
+    title: "User onboarding refresh in review",
+    description: "Product and design are aligning final copy before rollout.",
+    owner: "Miles Turner",
+    timestamp: "Today, 11:10",
+    status: "in_progress",
+  },
+  {
+    id: "evt-3",
+    title: "Payment retry incidents flagged",
+    description: "Operations is validating a cluster of failed card retries in South Africa.",
+    owner: "Anika Rao",
+    timestamp: "Today, 13:42",
+    status: "at_risk",
+  },
+  {
+    id: "evt-4",
+    title: "Segment export automation shipped",
+    description: "Marketing can now schedule filtered audience exports automatically.",
+    owner: "Noah Bennett",
+    timestamp: "Yesterday, 16:05",
+    status: "completed",
+  },
+]

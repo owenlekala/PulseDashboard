@@ -129,7 +129,7 @@ export default function ComponentsPage() {
       <PageHeader
         title="Components Showcase"
         description="Demonstration of all shared components available in the dashboard"
-        backHref="/dashboard"
+        backHref="/admin"
       />
 
       {/* Page Header Examples */}
@@ -146,7 +146,7 @@ export default function ComponentsPage() {
             <PageHeader
               title="Example Page"
               description="This is an example description"
-              backHref="/dashboard"
+              backHref="/admin"
               action={{
                 label: "New Item",
                 onClick: () => toast.success("Creating new item"),
@@ -675,4 +675,3 @@ export default function ComponentsPage() {
     </div>
   )
 }
-

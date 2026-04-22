@@ -70,10 +70,15 @@ export function DateRangePicker({
         <Input
           value={formatRange(value)}
           placeholder={placeholder}
-          className="bg-background pr-10"
+          className="bg-background pr-10 cursor-pointer"
           readOnly
           disabled={disabled}
           required={required}
+          onClick={() => {
+            if (!disabled) {
+              setOpen(true)
+            }
+          }}
           onKeyDown={(e) => {
             if (e.key === "ArrowDown") {
               e.preventDefault()
@@ -117,5 +122,4 @@ export function DateRangePicker({
     </div>
   )
 }
-
 

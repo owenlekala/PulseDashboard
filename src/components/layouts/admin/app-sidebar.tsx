@@ -29,28 +29,28 @@ const data = {
   user: {
     name: "John Doe",
     email: "john@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    avatar: "/avatar.png",
   },
   navMain: [
     {
       title: "Dashboard",
-      url: "/dashboard",
+      url: "/admin",
       icon: LayoutDashboard,
       isActive: true,
     },
     {
       title: "Users",
-      url: "/dashboard/users",
+      url: "/admin/users",
       icon: Users,
     },
     {
       title: "Components",
-      url: "/dashboard/components",
+      url: "/admin/components",
       icon: Component,
     },
     {
       title: "Charts",
-      url: "/dashboard/charts",
+      url: "/admin/charts",
       icon: BarChart3,
     },
   ],

@@ -27,7 +27,7 @@ const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
       <div
         ref={ref}
         className={cn(
-          "relative rounded-lg bg-sidebar",
+          "relative rounded-lg bg-muted dark:bg-sidebar",
           "pb-1",
           className
         )}
@@ -131,4 +131,3 @@ export {
   GlassCardContent,
   GlassCardFooter,
 }
-
