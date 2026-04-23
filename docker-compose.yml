@@ -1,0 +1,9 @@
+services:
+  pulse-dashboard:
+    image: {{ IMAGE_NAME }}
+    container_name: pulse-dashboard
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "${PORT:-3000}:3000"

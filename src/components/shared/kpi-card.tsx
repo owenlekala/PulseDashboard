@@ -48,12 +48,12 @@ export function KpiCard({
         </div>
       </div>
       <GlassCardContent>
-        <div className="flex flex-col">
+        <div className="flex h-full flex-col justify-between gap-3">
           <div className="text-3xl font-bold tracking-tight text-card-foreground">
             {value}
           </div>
           {description ? (
-            <p className="mt-2 text-xs text-muted-foreground">{description}</p>
+            <p className="text-xs text-muted-foreground">{description}</p>
           ) : null}
         </div>
       </GlassCardContent>

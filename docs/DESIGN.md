@@ -122,6 +122,8 @@ This is the preferred composition for charts, timelines, top-products, and recen
 - Keep the interior clean and readable.
 - Use the stat-card style when the card is primarily one value.
 - Use the module-card style when the card contains richer content.
+- Let `GlassCard` participate in full-height layouts. In grids or rows where cards should visually match height, keep the outer card and `GlassCardContent` as flex columns so the inset surface stretches with the tallest sibling.
+- When a compact stat card has a value and supporting text, use a `flex h-full flex-col justify-between` inner layout so the bottom spacing stays consistent across uneven rows.
 
 ### `GlassCard` Don’t
 - Don’t put a `GlassCardHeader` outside `GlassCardContent`.
@@ -239,6 +241,11 @@ Use `EmptyState` whenever a page or table reaches a zero-results or no-content s
 - Icons should usually be plain icons, not icons inside decorative colored pills, unless there is a strong meaning for that container.
 - If the icon is already aligned with a metric or header, keep it simple.
 - Prefer a plain colored icon over a tinted icon background for summary-card top-right markers.
+- Use `@mingcute/react` as the default icon library across the project.
+- Prefer MingCute `Line` icons for general UI actions and lighter interface chrome.
+- Prefer MingCute `Fill` icons where the UI benefits from stronger emphasis, such as sidebar navigation, selected states, or dense primary navigation surfaces.
+- Do not introduce new `lucide-react` or Heroicons usage for product UI when a MingCute equivalent exists.
+- Only keep or use another icon library when MingCute does not provide a suitable icon and consistency would not be harmed.
 
 ### Badges
 Use badges when the UI needs to communicate:

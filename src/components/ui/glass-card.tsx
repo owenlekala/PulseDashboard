@@ -22,12 +22,12 @@ interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
  * - Hairline border effect
  */
 const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
-  ({ className, variant = "default", outerTitle, children, ...props }, ref) => {
+  ({ className, outerTitle, children, ...props }, ref) => {
     return (
       <div
         ref={ref}
         className={cn(
-          "relative rounded-lg bg-muted dark:bg-sidebar",
+          "relative flex h-full flex-col rounded-lg bg-muted dark:bg-sidebar",
           "pb-1",
           className
         )}
@@ -35,7 +35,7 @@ const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(
       >
         <div
           className={cn(
-            "rounded-lg"
+            "flex h-full flex-col rounded-lg"
           )}
         >
           {outerTitle && (
@@ -99,8 +99,7 @@ const GlassCardContent = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-sm bg-card pt-4 px-4 pb-4",
-      "mx-1",
+      "mx-1 flex min-h-0 flex-1 flex-col rounded-sm bg-card px-4 pt-4 pb-4",
       className
     )}
     {...props}
