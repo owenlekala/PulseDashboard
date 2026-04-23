@@ -166,6 +166,8 @@ Prefer a separator-led structure for:
 
 Do not wrap every subsection in its own card by default. If the border is not adding hierarchy, remove it and use headings plus `Separator` instead.
 
+
+
 ## Page Header Rules
 
 Use `PageHeader` for top-of-page title areas.

@@ -127,6 +127,11 @@ export const adminNavSections: AdminNavSection[] = [
         href: "/admin/chat",
         description: "Manage live conversations, replies, and customer context.",
       },
+      {
+        title: "AI Chat",
+        href: "/admin/ai-chat",
+        description: "Work with AI copilots for summaries, drafting, and guided reasoning.",
+      },
     ],
   },
   {

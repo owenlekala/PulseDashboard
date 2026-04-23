@@ -34,15 +34,15 @@ export function ChatDetailsPanel({
     .find((message) => message.sender === "customer")
 
   return (
-    <div className="flex h-[72vh] min-h-[640px] flex-col rounded-lg border bg-card">
-      <div className="border-b px-5 py-4">
+    <div className="flex h-[72vh] min-h-[640px] flex-col bg-card">
+      <div className="px-1 pb-4">
         <h2 className="text-base font-semibold">Details</h2>
         <p className="text-sm text-muted-foreground">
           Context, ownership, and quick account information.
         </p>
       </div>
 
-      <ScrollArea className="flex-1 px-5 py-5">
+      <ScrollArea className="flex-1 pr-1">
         <div className="space-y-5">
           <div className="flex items-center gap-3">
             <Avatar className="size-12 rounded-xl">
@@ -57,33 +57,33 @@ export function ChatDetailsPanel({
             </div>
           </div>
 
-          <div className="space-y-3 rounded-lg border bg-muted/20 p-4">
+          <div className="space-y-3">
             <DetailRow icon={Mail} label="Email" value={customer.email} />
             <DetailRow icon={Clock3} label="Timezone" value={customer.timezone} />
             <DetailRow icon={ShieldCheck} label="Assignee" value={conversation.assignee} />
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-lg border bg-muted/20 p-4">
+            <div className="space-y-1.5 rounded-xl bg-muted/30 p-4">
               <p className="text-xs uppercase tracking-wide text-muted-foreground">
                 First response SLA
               </p>
-              <p className="mt-2 text-sm font-semibold text-amber-600 dark:text-amber-400">
+              <p className="text-sm font-semibold text-amber-600 dark:text-amber-400">
                 18 minutes remaining
               </p>
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 Escalate if no public reply is sent within this window.
               </p>
             </div>
-            <div className="rounded-lg border bg-muted/20 p-4">
+            <div className="space-y-1.5 rounded-xl bg-muted/30 p-4">
               <p className="text-xs uppercase tracking-wide text-muted-foreground">
                 Customer risk
               </p>
-              <div className="mt-2 flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <AlertTriangle className="size-4 text-amber-600 dark:text-amber-400" />
                 <p className="text-sm font-semibold">High attention</p>
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 Priority account with billing workflow dependency.
               </p>
             </div>
@@ -95,7 +95,7 @@ export function ChatDetailsPanel({
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
               Ownership
             </p>
-            <div className="space-y-3 rounded-lg border bg-muted/20 p-4">
+            <div className="space-y-4">
               <div className="space-y-2">
                 <p className="text-xs uppercase tracking-wide text-muted-foreground">
                   Status
@@ -145,7 +145,7 @@ export function ChatDetailsPanel({
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
               Conversation Context
             </p>
-            <div className="space-y-3 rounded-lg border bg-muted/20 p-4">
+            <div className="space-y-3">
               <div>
                 <p className="text-xs uppercase tracking-wide text-muted-foreground">
                   Channel
@@ -190,7 +190,7 @@ export function ChatDetailsPanel({
                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                   Latest customer update
                 </p>
-                <div className="rounded-lg border bg-muted/20 p-4">
+                <div className="rounded-xl bg-muted/30 p-4">
                   <p className="text-sm leading-6">{latestCustomerMessage.content}</p>
                   <p className="mt-2 text-xs text-muted-foreground">
                     {new Date(latestCustomerMessage.timestamp).toLocaleString("en-US", {
