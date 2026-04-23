@@ -66,6 +66,14 @@ const data = {
           title: "Actions",
           url: "/admin/showcase/actions",
         },
+        {
+          title: "Operations",
+          url: "/admin/showcase/operations",
+        },
+        {
+          title: "Entity UI",
+          url: "/admin/showcase/entity",
+        },
       ],
     },
     {

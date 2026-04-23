@@ -30,6 +30,18 @@ const sections = [
     description: "Filter toolbars, action menus, and page-level control patterns.",
     icon: MousePointerClick,
   },
+  {
+    href: "/admin/showcase/operations",
+    title: "Operational UI",
+    description: "Activity feeds, callouts, and bulk action patterns for admin workflows.",
+    icon: Rows3,
+  },
+  {
+    href: "/admin/showcase/entity",
+    title: "Entity UI",
+    description: "Preview cards, detail sections, and structured read-only entity surfaces.",
+    icon: LayoutPanelTop,
+  },
 ] as const
 
 export default function ShowcasePage() {
