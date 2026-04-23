@@ -90,7 +90,7 @@ export const adminNavSections: AdminNavSection[] = [
       },
       {
         title: "Products",
-        href: "/admin/users/products",
+        href: "/admin/products",
         description: "Manage product listings, inventory, and catalog state.",
       },
     ],

@@ -80,6 +80,7 @@ export function AdminLayoutShell({ children }: { children: ReactNode }) {
         section={routeSection}
         currentPath={pathname}
         isOpen={secondaryOpen}
+        onClose={() => setSecondaryOpen(false)}
       />
 
       <MobileAdminNav

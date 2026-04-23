@@ -31,13 +31,13 @@ export function PrimarySidebarRail({
   currentPath,
 }: PrimarySidebarRailProps) {
   return (
-    <aside className="bg-sidebar/95 border-r border-sidebar-border sticky top-0 hidden h-svh w-[4.5rem] shrink-0 flex-col self-start md:flex">
+    <aside className="bg-sidebar/95 border-r border-sidebar-border sticky top-0 hidden h-svh w-14 shrink-0 flex-col self-start md:flex">
       <div className="flex h-16 items-center justify-center border-b border-sidebar-border">
         <div className="bg-primary text-primary-foreground flex size-10 items-center justify-center rounded-xl">
           <Command className="size-4" />
         </div>
       </div>
-      <div className="flex flex-1 flex-col items-center gap-2 px-3 py-4">
+      <div className="flex flex-1 flex-col items-center gap-2 px-2 py-4">
         {sections.map((section) => {
           const isActive = section.key === activeSectionKey
           const isCurrentPath = currentPath === section.href
@@ -49,9 +49,9 @@ export function PrimarySidebarRail({
                 <Button
                   asChild
                   variant="ghost"
-                  size="icon"
+                  size="icon-sm"
                   className={cn(
-                    "text-muted-foreground hover:text-foreground h-10 w-10 rounded-xl",
+                    "text-muted-foreground hover:text-foreground h-8 w-8 rounded-lg",
                     isActive && "text-foreground"
                   )}
                 >
@@ -77,15 +77,15 @@ export function PrimarySidebarRail({
           )
         })}
       </div>
-      <div className="flex flex-col items-center gap-2 px-3 py-4">
+      <div className="flex flex-col items-center gap-2 px-2 py-4">
         {utilityLinks.map((item) => (
           <Tooltip key={item.title}>
             <TooltipTrigger asChild>
               <Button
                 asChild
                 variant="ghost"
-                size="icon"
-                className="text-muted-foreground hover:text-foreground h-10 w-10 rounded-xl"
+                size="icon-sm"
+                className="text-muted-foreground hover:text-foreground h-8 w-8 rounded-lg"
               >
                 <Link href={item.href}>
                   <item.icon.line className="size-4" />

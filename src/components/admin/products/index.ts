@@ -1,2 +1,5 @@
 export { ProductFormSheet } from "./product-form-sheet"
+export { ProductsPageClient } from "./products-page-client"
+export { ProductsShowcaseGrid } from "./products-showcase-grid"
+export { ProductsSpotlightPanel } from "./products-spotlight-panel"
 export { ProductsSummaryCards } from "./products-summary-cards"

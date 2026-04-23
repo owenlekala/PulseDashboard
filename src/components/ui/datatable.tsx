@@ -316,7 +316,7 @@ export function DataTable<TData, TValue>({
                     key={action.action}
                     variant={action.variant || "outline"}
                     size="sm"
-                    className="h-7"
+                    className="h-8 min-w-20"
                     onClick={() => onBulkAction?.(action.action, table.getFilteredSelectedRowModel().rows.map(row => row.original))}
                   >
                     {action.icon}

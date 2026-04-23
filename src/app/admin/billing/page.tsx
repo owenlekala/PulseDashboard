@@ -1,6 +1,6 @@
 "use client"
 
-import { ReceiptLine, SafeLockLine } from "@mingcute/react"
+import { BillLine, SafeLockLine } from "@mingcute/react"
 
 import {
   BillingInvoicesTable,
@@ -49,7 +49,7 @@ export default function BillingPage() {
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="rounded-md border bg-muted/20 p-4">
                 <div className="mb-2 text-muted-foreground">
-                  <ReceiptLine className="size-5" />
+                  <BillLine className="size-5" />
                 </div>
                 <p className="text-sm font-medium">Invoice automation</p>
                 <p className="mt-1 text-sm text-muted-foreground">

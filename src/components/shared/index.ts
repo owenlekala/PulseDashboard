@@ -12,6 +12,7 @@ export { NotificationsSheet } from "./notifications-sheet"
 export type { Notification, NotificationType } from "./notifications-sheet"
 
 export { EmptyState } from "./empty-state"
+export { ErrorState } from "./error-state"
 
 export { ConfirmDialog } from "./confirm-dialog"
 

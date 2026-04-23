@@ -150,6 +150,22 @@ Rule of thumb:
 - Use `GlassCard` for “dashboard system emphasis”
 - Use `Card` for “standard app surface”
 
+### Cards Are Optional
+Not every grouped section needs a bordered card.
+
+Use separators and spacing instead of `Card` when:
+- the content already lives inside another strong surface such as a sheet, dialog, or existing panel
+- you only need lightweight internal grouping between form sections
+- adding another border would make the layout feel boxed in or repetitive
+- the hierarchy is already clear through headings, spacing, and alignment
+
+Prefer a separator-led structure for:
+- side sheets and drawer forms
+- stacked settings sections inside an existing surface
+- lightweight read/edit groups where a full card adds noise
+
+Do not wrap every subsection in its own card by default. If the border is not adding hierarchy, remove it and use headings plus `Separator` instead.
+
 ## Page Header Rules
 
 Use `PageHeader` for top-of-page title areas.
@@ -334,7 +350,7 @@ Common patterns already used in this repo:
 Before writing new UI, AI should:
 1. Check whether a shared component already exists.
 2. Decide whether the surface should be `Card` or `GlassCard`.
-3. Match an existing composition pattern before creating a new one.
+3. Decide whether the section needs a card at all, or whether headings plus `Separator` would create a cleaner layout.
 4. Keep page files thin and move reusable pieces into feature/shared components.
 5. Prefer consistency with current dashboard/admin patterns over experimentation.
 
@@ -359,6 +375,11 @@ AI must not:
 - this is a standard content panel
 - the UI only needs a simple single-surface container
 - extra framing would feel heavy or unnecessary
+
+### Use `Separator` with plain layout when:
+- the section is inside a sheet, drawer, dialog, or existing panel
+- you need lightweight grouping rather than another visual container
+- headings and spacing already provide enough structure
 
 ### Use a plain icon when:
 - the icon is only an accent marker

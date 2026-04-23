@@ -1,18 +1,30 @@
 "use client"
 
-import { Paperclip, Phone, SendHorizonal, Video } from "lucide-react"
+import { MoreHorizontal, Paperclip, Phone, SendHorizonal, Star, Video } from "lucide-react"
 
-import type { ChatConversation } from "@/data/demo-chat-data"
+import type { CannedReply, ChatConversation } from "@/data/demo-chat-data"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
 interface ChatMessageThreadProps {
   conversation: ChatConversation
   draft: string
+  composerMode: "reply" | "note"
+  cannedReplies: CannedReply[]
+  onOpenDetails?: () => void
+  onComposerModeChange: (value: "reply" | "note") => void
+  onUseCannedReply: (reply: CannedReply) => void
   onDraftChange: (value: string) => void
   onSend: () => void
 }
@@ -20,6 +32,11 @@ interface ChatMessageThreadProps {
 export function ChatMessageThread({
   conversation,
   draft,
+  composerMode,
+  cannedReplies,
+  onOpenDetails,
+  onComposerModeChange,
+  onUseCannedReply,
   onDraftChange,
   onSend,
 }: ChatMessageThreadProps) {
@@ -35,6 +52,13 @@ export function ChatMessageThread({
           </p>
         </div>
         <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            className="hidden rounded-lg lg:inline-flex"
+            onClick={onOpenDetails}
+          >
+            Details
+          </Button>
           <Button variant="outline" size="icon" className="rounded-lg">
             <Phone className="size-4" />
             <span className="sr-only">Start call</span>
@@ -43,6 +67,24 @@ export function ChatMessageThread({
             <Video className="size-4" />
             <span className="sr-only">Start video</span>
           </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon" className="rounded-lg">
+                <MoreHorizontal className="size-4" />
+                <span className="sr-only">Open conversation actions</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem>
+                <Star className="mr-2 size-4" />
+                Mark as priority
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={onOpenDetails}>
+                Open details
+              </DropdownMenuItem>
+              <DropdownMenuItem>Resolve conversation</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
@@ -51,6 +93,7 @@ export function ChatMessageThread({
           {conversation.messages.map((message) => {
             const isCustomer = message.sender === "customer"
             const isSystem = message.sender === "system"
+            const isNote = message.kind === "note"
 
             if (isSystem) {
               return (
@@ -84,15 +127,25 @@ export function ChatMessageThread({
                 <div
                   className={cn(
                     "max-w-[72%] rounded-2xl px-4 py-3 text-sm leading-6",
+                    isNote &&
+                      "border border-amber-200 bg-amber-50 text-amber-950 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-100",
                     isCustomer
                       ? "rounded-tl-sm bg-muted"
-                      : "rounded-tr-sm bg-primary text-primary-foreground"
+                      : !isNote && "rounded-tr-sm bg-primary text-primary-foreground"
                   )}
                 >
+                  {isNote ? (
+                    <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-700 dark:text-amber-300">
+                      Internal note
+                    </p>
+                  ) : null}
                   <p>{message.content}</p>
                   <p
                     className={cn(
                       "mt-2 text-[11px]",
+                      isNote
+                        ? "text-amber-700/80 dark:text-amber-300/80"
+                        : null,
                       isCustomer
                         ? "text-muted-foreground"
                         : "text-primary-foreground/80"
@@ -104,16 +157,72 @@ export function ChatMessageThread({
               </div>
             )
           })}
+          {conversation.customerTyping ? (
+            <div className="flex gap-3">
+              <Avatar className="mt-1 size-8 rounded-lg">
+                <AvatarImage
+                  src={conversation.customer.avatar}
+                  alt={conversation.customer.name}
+                />
+                <AvatarFallback className="rounded-lg">
+                  {initials(conversation.customer.name)}
+                </AvatarFallback>
+              </Avatar>
+              <div className="rounded-2xl rounded-tl-sm bg-muted px-4 py-3">
+                <div className="flex items-center gap-1.5">
+                  <span className="size-2 animate-pulse rounded-full bg-muted-foreground/60" />
+                  <span className="size-2 animate-pulse rounded-full bg-muted-foreground/60 [animation-delay:120ms]" />
+                  <span className="size-2 animate-pulse rounded-full bg-muted-foreground/60 [animation-delay:240ms]" />
+                </div>
+              </div>
+            </div>
+          ) : null}
         </div>
       </ScrollArea>
 
       <Separator />
 
       <div className="space-y-3 px-5 py-4">
+        <div className="flex items-center justify-between gap-3">
+          <Tabs
+            value={composerMode}
+            onValueChange={(value) =>
+              onComposerModeChange(value as "reply" | "note")
+            }
+            className="w-auto"
+          >
+            <TabsList>
+              <TabsTrigger value="reply">Reply</TabsTrigger>
+              <TabsTrigger value="note">Internal note</TabsTrigger>
+            </TabsList>
+          </Tabs>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="rounded-lg">
+                Canned reply
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {cannedReplies.map((reply) => (
+                <DropdownMenuItem
+                  key={reply.id}
+                  onClick={() => onUseCannedReply(reply)}
+                >
+                  {reply.label}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
         <Textarea
           value={draft}
           onChange={(event) => onDraftChange(event.target.value)}
-          placeholder="Write a reply..."
+          placeholder={
+            composerMode === "note"
+              ? "Add an internal note for your team..."
+              : "Write a reply..."
+          }
           className="min-h-24 resize-none"
         />
         <div className="flex items-center justify-between gap-3">
@@ -122,7 +231,7 @@ export function ChatMessageThread({
             Attach
           </Button>
           <Button className="gap-2" onClick={onSend} disabled={!draft.trim()}>
-            Send
+            {composerMode === "note" ? "Save note" : "Send"}
             <SendHorizonal className="size-4" />
           </Button>
         </div>

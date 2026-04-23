@@ -1,32 +1,50 @@
 "use client"
 
 import Link from "next/link"
+import { PanelLeftClose } from "lucide-react"
 
 import {
   type AdminNavSection,
 } from "@/components/layouts/admin/admin-nav-config"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface SecondarySidebarPanelProps {
   section: AdminNavSection
   currentPath: string
   isOpen: boolean
+  onClose: () => void
 }
 
 export function SecondarySidebarPanel({
   section,
   currentPath,
   isOpen,
+  onClose,
 }: SecondarySidebarPanelProps) {
   return (
     <aside
       className={cn(
-        "border-r bg-background sticky top-0 hidden h-svh shrink-0 self-start overflow-hidden transition-[width,opacity,border-color] duration-200 md:flex md:flex-col",
-        isOpen ? "w-72 opacity-100 border-border" : "w-0 opacity-0 border-transparent"
+        "border-r bg-background sticky top-0 hidden h-svh shrink-0 self-start overflow-visible transition-[width,opacity,border-color] duration-200 md:flex md:flex-col",
+        isOpen ? "w-64 opacity-100 border-border" : "w-0 opacity-0 border-transparent"
       )}
       aria-hidden={!isOpen}
     >
+      {isOpen ? (
+        <Button
+          type="button"
+          variant="outline"
+          size="icon-sm"
+          onClick={onClose}
+          className="bg-background text-muted-foreground hover:text-foreground absolute top-1/2 right-0 z-10 hidden -translate-y-1/2 translate-x-1/2 rounded-full border shadow-sm md:inline-flex"
+          aria-label={`Close ${section.title} menu`}
+          title={`Close ${section.title} menu`}
+        >
+          <PanelLeftClose className="size-4" />
+        </Button>
+      ) : null}
+
       <div className="flex h-16 items-center border-b px-5">
         <div className="min-w-0">
           <p className="text-foreground truncate text-sm font-semibold">
@@ -60,7 +78,7 @@ export function SecondarySidebarPanel({
                     )}
                   >
                     <span className="min-w-0">
-                      <span className="block text-sm font-medium">
+                      <span className="block text-sm font-semibold">
                         {item.title}
                       </span>
                       {item.description ? (

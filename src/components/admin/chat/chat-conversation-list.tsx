@@ -8,12 +8,20 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 interface ChatConversationListProps {
   conversations: ChatConversation[]
   activeConversationId: string
   query: string
+  queue: "all" | "open" | "pending"
+  counts: {
+    all: number
+    open: number
+    pending: number
+  }
   onQueryChange: (value: string) => void
+  onQueueChange: (value: "all" | "open" | "pending") => void
   onSelectConversation: (id: string) => void
 }
 
@@ -27,7 +35,10 @@ export function ChatConversationList({
   conversations,
   activeConversationId,
   query,
+  queue,
+  counts,
   onQueryChange,
+  onQueueChange,
   onSelectConversation,
 }: ChatConversationListProps) {
   return (
@@ -48,6 +59,17 @@ export function ChatConversationList({
             className="pl-9"
           />
         </div>
+        <Tabs
+          value={queue}
+          onValueChange={(value) => onQueueChange(value as "all" | "open" | "pending")}
+          className="mt-3"
+        >
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="all">All {counts.all}</TabsTrigger>
+            <TabsTrigger value="open">Open {counts.open}</TabsTrigger>
+            <TabsTrigger value="pending">Pending {counts.pending}</TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
 
       <ScrollArea className="flex-1">

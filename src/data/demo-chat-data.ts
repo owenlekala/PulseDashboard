@@ -13,6 +13,7 @@ export interface ChatMessage {
   sender: "agent" | "customer" | "system"
   content: string
   timestamp: string
+  kind?: "message" | "note"
 }
 
 export interface ChatConversation {
@@ -26,7 +27,14 @@ export interface ChatConversation {
   customer: ChatParticipant
   orderContext: string
   tags: string[]
+  customerTyping?: boolean
   messages: ChatMessage[]
+}
+
+export interface CannedReply {
+  id: string
+  label: string
+  content: string
 }
 
 export const demoChatConversations: ChatConversation[] = [
@@ -63,6 +71,7 @@ export const demoChatConversations: ChatConversation[] = [
         content:
           "I’m checking the export job logs now. I’ll confirm whether the dataset or the workbook render step dropped those rows.",
         timestamp: "2026-04-23T08:18:00.000Z",
+        kind: "message",
       },
       {
         id: "msg_003",
@@ -70,6 +79,7 @@ export const demoChatConversations: ChatConversation[] = [
         content:
           "Thank you. We also noticed the CSV version has the same issue, so it may be upstream.",
         timestamp: "2026-04-23T08:21:00.000Z",
+        kind: "message",
       },
       {
         id: "msg_004",
@@ -77,7 +87,16 @@ export const demoChatConversations: ChatConversation[] = [
         content: "Priority escalated for finance workspace account.",
         timestamp: "2026-04-23T08:24:00.000Z",
       },
+      {
+        id: "msg_004b",
+        sender: "agent",
+        content:
+          "Internal note: finance export issue appears related to the April dataset partition. Engineering escalation prepared if re-run fails.",
+        timestamp: "2026-04-23T08:27:00.000Z",
+        kind: "note",
+      },
     ],
+    customerTyping: true,
   },
   {
     id: "conv_002",
@@ -112,6 +131,7 @@ export const demoChatConversations: ChatConversation[] = [
         content:
           "I can send a recommended setup sequence for queue monitoring, escalation routing, and morning review dashboards.",
         timestamp: "2026-04-22T14:11:00.000Z",
+        kind: "message",
       },
     ],
   },
@@ -148,7 +168,29 @@ export const demoChatConversations: ChatConversation[] = [
         content:
           "I can help with an immediate seat expansion and confirm whether your renewal plan should be adjusted at the same time.",
         timestamp: "2026-04-23T06:52:00.000Z",
+        kind: "message",
       },
     ],
+  },
+]
+
+export const cannedReplies: CannedReply[] = [
+  {
+    id: "reply_1",
+    label: "Acknowledge issue",
+    content:
+      "Thanks for flagging this. I’m reviewing the issue now and will share the next update shortly.",
+  },
+  {
+    id: "reply_2",
+    label: "Need more detail",
+    content:
+      "Could you share a screenshot or the exact step where this happens? That will help us narrow it down faster.",
+  },
+  {
+    id: "reply_3",
+    label: "Escalation started",
+    content:
+      "I’ve escalated this to the appropriate team and I’ll keep ownership of the conversation until we have a confirmed resolution.",
   },
 ]
