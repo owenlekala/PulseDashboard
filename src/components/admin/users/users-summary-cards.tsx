@@ -2,9 +2,7 @@
 
 import { Users, UserCheck, Clock3, ShieldAlert } from "lucide-react"
 
-import { GlassCard, GlassCardContent } from "@/components/ui/glass-card"
-import { Badge } from "@/components/ui/badge"
-import { cn } from "@/lib/utils"
+import { KpiCard } from "@/components/shared"
 import type { UserSegment } from "@/components/admin/users/users-segment-tabs"
 
 interface UsersSummaryCardsProps {
@@ -48,26 +46,14 @@ export function UsersSummaryCards({ counts }: UsersSummaryCardsProps) {
       {cards.map((card) => {
         const Icon = card.icon
         return (
-          <GlassCard key={card.key}>
-            <div className="px-4 pt-4 pb-2">
-              <div className="flex items-center justify-between">
-                <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                  {card.label}
-                </p>
-                <Icon className={cn("size-4", card.tone)} />
-              </div>
-            </div>
-            <GlassCardContent>
-              <div className="flex flex-col">
-                <div className="text-3xl font-bold text-card-foreground">
-                  {counts[card.key]}
-                </div>
-                <p className="mt-2 text-xs text-muted-foreground">
-                  {card.description}
-                </p>
-              </div>
-            </GlassCardContent>
-          </GlassCard>
+          <KpiCard
+            key={card.key}
+            label={card.label}
+            value={counts[card.key]}
+            description={card.description}
+            icon={Icon}
+            iconClassName={card.tone}
+          />
         )
       })}
     </div>

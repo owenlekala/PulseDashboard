@@ -45,6 +45,14 @@ Use components in this order of preference:
 4. Page-local markup
    - Only when the UI is unique and not reusable elsewhere.
 
+### Preferred Shared Building Blocks
+When these components fit the use case, prefer them over bespoke markup:
+- `KpiCard` for dashboard/admin summary metrics
+- `InlineTrend` for dashboard percentage and delta indicators
+- `FilterToolbar` for utility-style filter sections
+- `ActionMenu` for row and quick-action dropdowns
+- `InfoList` for structured read-only detail blocks
+
 ## Glass Card Rules
 
 `GlassCard` is a specific surface language in this app. It is not a generic wrapper to put around everything.

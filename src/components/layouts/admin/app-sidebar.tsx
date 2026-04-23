@@ -5,6 +5,7 @@ import {
   Command,
   LayoutDashboard,
   LifeBuoy,
+  Layers3,
   Send,
   Users,
   Component,
@@ -47,6 +48,25 @@ const data = {
       title: "Components",
       url: "/admin/components",
       icon: Component,
+    },
+    {
+      title: "Shared UI",
+      url: "/admin/showcase",
+      icon: Layers3,
+      items: [
+        {
+          title: "Surfaces",
+          url: "/admin/showcase/surfaces",
+        },
+        {
+          title: "Data Display",
+          url: "/admin/showcase/data-display",
+        },
+        {
+          title: "Actions",
+          url: "/admin/showcase/actions",
+        },
+      ],
     },
     {
       title: "Charts",

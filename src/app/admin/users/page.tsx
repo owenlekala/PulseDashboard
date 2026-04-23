@@ -4,25 +4,15 @@ import { useMemo, useState } from "react"
 import type { DateRange } from "react-day-picker"
 import { ColumnDef } from "@tanstack/react-table"
 import { DataTable } from "@/components/ui/datatable"
-import { EmptyState, PageHeader } from "@/components/shared"
+import { ActionMenu, EmptyState, PageHeader } from "@/components/shared"
 import { StatusBadge } from "@/components/shared/status-badge"
-import { Button } from "@/components/ui/button"
 import {
-  MoreHorizontal,
   Trash2,
   Ban,
   CheckCircle,
   UserPlus,
   UserSearch,
 } from "lucide-react"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import {
   demoUserDepartments,
   demoUserRoles,
@@ -116,42 +106,42 @@ const columns: ColumnDef<DemoUser>[] = [
         | undefined
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(user.id)}>
-              Copy user ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => meta?.onViewUser(user)}>
-              View details
-            </DropdownMenuItem>
-            <DropdownMenuItem>Edit user</DropdownMenuItem>
-            {user.status !== "active" ? (
-              <DropdownMenuItem onClick={() => meta?.onQuickAction("activate", user)}>
-                Activate user
-              </DropdownMenuItem>
-            ) : null}
-            {user.status !== "suspended" ? (
-              <DropdownMenuItem onClick={() => meta?.onQuickAction("suspend", user)}>
-                Suspend user
-              </DropdownMenuItem>
-            ) : null}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="text-destructive"
-              onClick={() => meta?.onQuickAction("delete", user)}
-            >
-              Delete user
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <ActionMenu
+          items={[
+            {
+              label: "Copy user ID",
+              onSelect: () => navigator.clipboard.writeText(user.id),
+            },
+            {
+              label: "View details",
+              onSelect: () => meta?.onViewUser(user),
+              separatorBefore: true,
+            },
+            { label: "Edit user" },
+            ...(user.status !== "active"
+              ? [
+                  {
+                    label: "Activate user",
+                    onSelect: () => meta?.onQuickAction("activate", user),
+                  },
+                ]
+              : []),
+            ...(user.status !== "suspended"
+              ? [
+                  {
+                    label: "Suspend user",
+                    onSelect: () => meta?.onQuickAction("suspend", user),
+                  },
+                ]
+              : []),
+            {
+              label: "Delete user",
+              onSelect: () => meta?.onQuickAction("delete", user),
+              separatorBefore: true,
+              tone: "destructive",
+            },
+          ]}
+        />
       )
     },
   },

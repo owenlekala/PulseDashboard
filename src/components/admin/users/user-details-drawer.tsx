@@ -3,7 +3,7 @@
 import { Mail, MapPin, Phone, ShieldCheck, Ticket, UserRound } from "lucide-react"
 
 import type { DemoUser } from "@/data/demo-table-data"
-import { StatusBadge } from "@/components/shared/status-badge"
+import { InfoList, StatusBadge } from "@/components/shared"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
@@ -68,34 +68,36 @@ export function UserDetailsDrawer({
               </div>
             </SheetHeader>
             <div className="flex-1 space-y-6 overflow-y-auto p-4">
-              <div className="grid gap-3 sm:grid-cols-2">
-                <DetailItem icon={Mail} label="Email" value={user.email} />
-                <DetailItem icon={Phone} label="Phone" value={user.phone} />
-                <DetailItem icon={MapPin} label="Location" value={user.location} />
-                <DetailItem
-                  icon={UserRound}
-                  label="Joined"
-                  value={new Date(user.joinDate).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                />
-                <DetailItem
-                  icon={ShieldCheck}
-                  label="Last active"
-                  value={new Date(user.lastActive).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
-                />
-                <DetailItem
-                  icon={Ticket}
-                  label="Tickets resolved"
-                  value={`${user.ticketsResolved}`}
-                />
-              </div>
+              <InfoList
+                items={[
+                  { icon: Mail, label: "Email", value: user.email },
+                  { icon: Phone, label: "Phone", value: user.phone },
+                  { icon: MapPin, label: "Location", value: user.location },
+                  {
+                    icon: UserRound,
+                    label: "Joined",
+                    value: new Date(user.joinDate).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    }),
+                  },
+                  {
+                    icon: ShieldCheck,
+                    label: "Last active",
+                    value: new Date(user.lastActive).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    }),
+                  },
+                  {
+                    icon: Ticket,
+                    label: "Tickets resolved",
+                    value: `${user.ticketsResolved}`,
+                  },
+                ]}
+              />
               <Separator />
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -124,23 +126,5 @@ export function UserDetailsDrawer({
         ) : null}
       </SheetContent>
     </Sheet>
-  )
-}
-
-interface DetailItemProps {
-  icon: React.ComponentType<{ className?: string }>
-  label: string
-  value: string
-}
-
-function DetailItem({ icon: Icon, label, value }: DetailItemProps) {
-  return (
-    <div className="rounded-md border bg-muted/20 p-3">
-      <div className="mb-2 flex items-center gap-2 text-xs uppercase tracking-wide text-muted-foreground">
-        <Icon className="size-3.5" />
-        {label}
-      </div>
-      <div className="text-sm font-medium">{value}</div>
-    </div>
   )
 }
