@@ -24,24 +24,21 @@ export function EmptyState({
   action,
   className,
 }: EmptyStateProps) {
-  const ActionButton = () => {
-    if (!action) return null
+  let actionButton: React.ReactNode = null
 
+  if (action) {
     const buttonContent = (
       <Button onClick={action.onClick} variant="default">
         {action.label}
       </Button>
     )
 
-    if (action.href && !action.onClick) {
-      return (
-        <Link href={action.href}>
-          {buttonContent}
-        </Link>
+    actionButton =
+      action.href && !action.onClick ? (
+        <Link href={action.href}>{buttonContent}</Link>
+      ) : (
+        buttonContent
       )
-    }
-
-    return buttonContent
   }
 
   return (
@@ -62,8 +59,7 @@ export function EmptyState({
           {description}
         </p>
       )}
-      {action && <ActionButton />}
+      {actionButton}
     </div>
   )
 }
-

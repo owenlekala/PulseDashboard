@@ -14,7 +14,7 @@ export default function Home() {
             Your comprehensive dashboard solution for managing and monitoring your business metrics
           </p>
 
-          <div className="mb-16 grid gap-6 md:grid-cols-2">
+          <div className="mb-16 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             <Card>
               <CardHeader>
                 <CardTitle>Get Started</CardTitle>
@@ -39,6 +39,20 @@ export default function Home() {
               <CardContent>
                 <Button asChild size="lg" variant="outline" className="w-full">
                   <Link href="/login">Login</Link>
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Client dashboard</CardTitle>
+                <CardDescription>
+                  Open the client workspace to review billing, messages, and account settings
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button asChild size="lg" variant="secondary" className="w-full">
+                  <Link href="/client">Open Client Dashboard</Link>
                 </Button>
               </CardContent>
             </Card>

@@ -1,10 +1,10 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { History, Plus } from "lucide-react"
 
 import {
-  AiChatContextPanel,
-  AiChatHistoryTabs,
+  AiChatHistorySheet,
   AiChatThread,
 } from "@/components/admin/ai-chat"
 import { PageHeader, toast } from "@/components/shared"
@@ -40,6 +40,8 @@ export default function AiChatPage() {
   const [mode, setMode] = useState<"chat" | "prompt">("chat")
   const [draft, setDraft] = useState("")
   const [selectedModel, setSelectedModel] = useState<string>(aiModels[0].id)
+  const [historyOpen, setHistoryOpen] = useState(false)
+  const [expanded, setExpanded] = useState(false)
 
   const filteredSessions = useMemo(() => {
     const normalized = query.trim().toLowerCase()
@@ -64,9 +66,41 @@ export default function AiChatPage() {
   const activeAssistant = demoAiAssistants.find(
     (assistant) => assistant.id === activeSession?.assistantId
   )
+  const isNewChat =
+    activeSession.messages.length === 1 && activeSession.messages[0]?.role === "system"
 
-  const handleUseSuggestion = (value: string) => {
-    setDraft(value)
+  const handleNewChat = () => {
+    const assistant = demoAiAssistants[0]
+    const nextId = `ai_${Date.now()}`
+    const newSession = {
+      id: nextId,
+      title: "New chat",
+      assistantId: assistant.id,
+      status: "draft" as const,
+      updatedAt: new Date().toISOString(),
+      tags: ["new"],
+      attachments: [],
+      summary: "Fresh AI workspace ready for a new conversation.",
+      suggestedPrompts: [
+        "Summarize what I need help with and suggest the best next step.",
+        "Turn my rough notes into a clearer prompt.",
+      ],
+      messages: [
+        {
+          id: `ai_system_${Date.now()}`,
+          role: "system" as const,
+          content: `${assistant.name} is ready for a new conversation.`,
+          timestamp: new Date().toISOString(),
+        },
+      ],
+    }
+
+    setSessions((current) => [newSession, ...current])
+    setActiveSessionId(nextId)
+    setDraft("")
+    setMode("chat")
+    setHistoryOpen(false)
+    toast.success("New chat started")
   }
 
   const handleSend = () => {
@@ -117,39 +151,74 @@ export default function AiChatPage() {
       <PageHeader
         title="AI Chat"
         description="A workspace for reasoning, drafting, and context-grounded AI collaboration across the admin product."
+        actions={[
+          {
+            label: "History",
+            onClick: () => setHistoryOpen(true),
+            icon: History,
+            variant: "outline",
+          },
+          {
+            label: "New chat",
+            onClick: handleNewChat,
+            icon: Plus,
+          },
+        ]}
       />
 
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="space-y-6">
-          <AiChatThread
-            assistant={activeAssistant}
-            session={activeSession}
-            draft={draft}
-            mode={mode}
-            onModeChange={setMode}
-            onDraftChange={setDraft}
-            onSend={handleSend}
-            onUseSuggestion={handleUseSuggestion}
-          />
-          <AiChatHistoryTabs
-            sessions={filteredSessions}
-            activeSessionId={activeSession.id}
-            query={query}
-            filter={filter}
-            onQueryChange={setQuery}
-            onFilterChange={setFilter}
-            onSelectSession={setActiveSessionId}
-          />
-        </div>
-        <AiChatContextPanel
+      {!expanded ? (
+        <AiChatThread
           assistant={activeAssistant}
           session={activeSession}
+          isNewChat={isNewChat}
+          expanded={expanded}
           selectedModel={selectedModel}
-          availableModels={[...aiModels]}
+          availableModels={aiModels.map((model) => ({ id: model.id, label: model.label }))}
+          onExpandedChange={setExpanded}
           onSelectModel={setSelectedModel}
-          onUseSuggestion={handleUseSuggestion}
+          draft={draft}
+          mode={mode}
+          onModeChange={setMode}
+          onDraftChange={setDraft}
+          onSend={handleSend}
+          className="border-none bg-transparent"
         />
-      </div>
+      ) : null}
+
+      <AiChatHistorySheet
+        open={historyOpen}
+        onOpenChange={setHistoryOpen}
+        sessions={filteredSessions}
+        activeSessionId={activeSession.id}
+        query={query}
+        filter={filter}
+        onQueryChange={setQuery}
+        onFilterChange={setFilter}
+        onSelectSession={setActiveSessionId}
+      />
+
+      {expanded ? (
+        <div className="fixed inset-0 z-40 bg-background">
+          <div className="mx-auto flex h-full w-full max-w-[1600px] items-stretch px-6 pb-6 pt-24">
+            <AiChatThread
+              assistant={activeAssistant}
+              session={activeSession}
+              isNewChat={isNewChat}
+              expanded={expanded}
+              selectedModel={selectedModel}
+              availableModels={aiModels.map((model) => ({ id: model.id, label: model.label }))}
+              onExpandedChange={setExpanded}
+              onSelectModel={setSelectedModel}
+              draft={draft}
+              mode={mode}
+              onModeChange={setMode}
+              onDraftChange={setDraft}
+              onSend={handleSend}
+              className="h-full min-h-0 w-full border-none bg-transparent shadow-none"
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 }
