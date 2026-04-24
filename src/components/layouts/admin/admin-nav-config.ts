@@ -2,22 +2,48 @@ import type { ComponentType, SVGProps } from "react"
 import {
   BankCardFill,
   BankCardLine,
+  Bill2Fill,
+  Bill2Line,
   Chat1Fill,
   Chat1Line,
+  Chat3AiFill,
+  Chat3AiLine,
+  Chat3Fill,
+  Chat3Line,
   ChartBarFill,
   ChartBarLine,
+  ChartPieFill,
+  ChartPieLine,
+  ComponentsFill,
+  ComponentsLine,
   CubeLine,
   CubeFill,
+  Cursor3Fill,
+  Cursor3Line,
   DashboardFill,
   DashboardLine,
+  Dashboard3Fill,
+  Dashboard3Line,
+  Group3Fill,
+  Group3Line,
+  Layout4Fill,
+  Layout4Line,
   LayoutGridFill,
   LayoutGridLine,
   LifebuoyFill,
   LifebuoyLine,
+  ListSearchFill,
+  ListSearchLine,
+  PackageFill,
+  PackageLine,
   SendPlaneLine,
   SendPlaneFill,
+  Task2Fill,
+  Task2Line,
   User3Line,
   User3Fill,
+  UserSettingFill,
+  UserSettingLine,
 } from "@mingcute/react"
 
 export type SidebarIcon = ComponentType<SVGProps<SVGSVGElement>>
@@ -25,7 +51,10 @@ export type SidebarIcon = ComponentType<SVGProps<SVGSVGElement>>
 export interface AdminNavItem {
   title: string
   href: string
-  description?: string
+  icon: {
+    line: SidebarIcon
+    fill: SidebarIcon
+  }
 }
 
 export interface AdminNavSection {
@@ -69,7 +98,10 @@ export const adminNavSections: AdminNavSection[] = [
       {
         title: "Overview",
         href: "/admin",
-        description: "Core KPI cards, charts, and recent activity.",
+        icon: {
+          line: Dashboard3Line,
+          fill: Dashboard3Fill,
+        },
       },
     ],
   },
@@ -86,12 +118,18 @@ export const adminNavSections: AdminNavSection[] = [
       {
         title: "User Directory",
         href: "/admin/users",
-        description: "Manage user records, states, and quick actions.",
+        icon: {
+          line: Group3Line,
+          fill: Group3Fill,
+        },
       },
       {
         title: "Products",
         href: "/admin/products",
-        description: "Manage product listings, inventory, and catalog state.",
+        icon: {
+          line: PackageLine,
+          fill: PackageFill,
+        },
       },
     ],
   },
@@ -108,7 +146,10 @@ export const adminNavSections: AdminNavSection[] = [
       {
         title: "Billing Overview",
         href: "/admin/billing",
-        description: "Subscription state, invoice actions, and payment operations.",
+        icon: {
+          line: Bill2Line,
+          fill: Bill2Fill,
+        },
       },
     ],
   },
@@ -125,12 +166,18 @@ export const adminNavSections: AdminNavSection[] = [
       {
         title: "Chat Workspace",
         href: "/admin/chat",
-        description: "Manage live conversations, replies, and customer context.",
+        icon: {
+          line: Chat3Line,
+          fill: Chat3Fill,
+        },
       },
       {
         title: "AI Chat",
         href: "/admin/ai-chat",
-        description: "Work with AI copilots for summaries, drafting, and guided reasoning.",
+        icon: {
+          line: Chat3AiLine,
+          fill: Chat3AiFill,
+        },
       },
     ],
   },
@@ -147,7 +194,10 @@ export const adminNavSections: AdminNavSection[] = [
       {
         title: "Components Demo",
         href: "/admin/components",
-        description: "One-page demo surface for the older component catalog.",
+        icon: {
+          line: ComponentsLine,
+          fill: ComponentsFill,
+        },
       },
     ],
   },
@@ -164,32 +214,50 @@ export const adminNavSections: AdminNavSection[] = [
       {
         title: "Overview",
         href: "/admin/showcase",
-        description: "Entry point for the shared UI showcase.",
+        icon: {
+          line: LayoutGridLine,
+          fill: LayoutGridFill,
+        },
       },
       {
         title: "Surfaces",
         href: "/admin/showcase/surfaces",
-        description: "Cards, KPIs, and shared visual surfaces.",
+        icon: {
+          line: Layout4Line,
+          fill: Layout4Fill,
+        },
       },
       {
         title: "Data Display",
         href: "/admin/showcase/data-display",
-        description: "Structured data presentation and read-only layouts.",
+        icon: {
+          line: ListSearchLine,
+          fill: ListSearchFill,
+        },
       },
       {
         title: "Actions",
         href: "/admin/showcase/actions",
-        description: "Menus, toolbars, and action-oriented shared patterns.",
+        icon: {
+          line: Cursor3Line,
+          fill: Cursor3Fill,
+        },
       },
       {
         title: "Operations",
         href: "/admin/showcase/operations",
-        description: "Operational flows, feeds, and admin workflow UI.",
+        icon: {
+          line: Task2Line,
+          fill: Task2Fill,
+        },
       },
       {
         title: "Entity UI",
         href: "/admin/showcase/entity",
-        description: "Entity profile, detail, and properties panel patterns.",
+        icon: {
+          line: UserSettingLine,
+          fill: UserSettingFill,
+        },
       },
     ],
   },
@@ -206,7 +274,10 @@ export const adminNavSections: AdminNavSection[] = [
       {
         title: "Charts Gallery",
         href: "/admin/charts",
-        description: "Standalone chart screens and reference layouts.",
+        icon: {
+          line: ChartPieLine,
+          fill: ChartPieFill,
+        },
       },
     ],
   },

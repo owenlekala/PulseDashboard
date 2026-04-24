@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Command } from "lucide-react"
+import { CommandLine } from "@mingcute/react"
 
 import {
   type AdminNavSection,
@@ -34,7 +34,7 @@ export function PrimarySidebarRail({
     <aside className="bg-sidebar/95 border-r border-sidebar-border sticky top-0 hidden h-svh w-14 shrink-0 flex-col self-start md:flex">
       <div className="flex h-16 items-center justify-center border-b border-sidebar-border">
         <div className="bg-primary text-primary-foreground flex size-10 items-center justify-center rounded-xl">
-          <Command className="size-4" />
+          <CommandLine className="size-4" />
         </div>
       </div>
       <div className="flex flex-1 flex-col items-center gap-2 px-2 py-4">

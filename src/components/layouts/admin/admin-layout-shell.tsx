@@ -4,15 +4,13 @@ import { type ReactNode, useMemo, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
-  BadgeCheck,
-  Bell,
-  Command,
-  CreditCard,
-  LogOut,
-  PanelLeft,
-  PanelLeftClose,
-  Sparkles,
-} from "lucide-react"
+  BadgeLine,
+  BankCardLine,
+  BellRingingLine,
+  CommandLine,
+  ExitLine,
+  SparklesLine,
+} from "@mingcute/react"
 
 import {
   adminNavSections,
@@ -80,7 +78,7 @@ export function AdminLayoutShell({ children }: { children: ReactNode }) {
         section={routeSection}
         currentPath={pathname}
         isOpen={secondaryOpen}
-        onClose={() => setSecondaryOpen(false)}
+        onOpenChange={setSecondaryOpen}
       />
 
       <MobileAdminNav
@@ -100,21 +98,8 @@ export function AdminLayoutShell({ children }: { children: ReactNode }) {
                 onClick={() => setMobileOpen(true)}
                 className="rounded-xl md:hidden"
               >
-                <Command className="size-4" />
+                <CommandLine className="size-4" />
                 <span className="sr-only">Open navigation</span>
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setSecondaryOpen((open) => !open)}
-                className="hidden rounded-xl md:inline-flex"
-              >
-                {secondaryOpen ? (
-                  <PanelLeftClose className="size-4" />
-                ) : (
-                  <PanelLeft className="size-4" />
-                )}
-                <span className="sr-only">Toggle section menu</span>
               </Button>
               <BreadcrumbNav />
             </div>
@@ -161,28 +146,28 @@ function HeaderUserMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Sparkles />
+            <SparklesLine />
             Upgrade to Pro
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <BadgeCheck />
+            <BadgeLine />
             Account
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <CreditCard />
+            <BankCardLine />
             Billing
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Bell />
+            <BellRingingLine />
             Notifications
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <LogOut />
+          <ExitLine />
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -213,7 +198,7 @@ function MobileAdminNav({
         <SheetHeader className="border-b border-sidebar-border">
           <div className="flex items-center gap-3">
             <div className="bg-primary text-primary-foreground flex size-10 items-center justify-center rounded-xl">
-              <Command className="size-4" />
+              <CommandLine className="size-4" />
             </div>
             <div className="text-left">
               <SheetTitle>Pulse Dashboard</SheetTitle>
@@ -226,59 +211,67 @@ function MobileAdminNav({
 
         <div className="space-y-6 overflow-y-auto p-4">
           <div className="space-y-2">
-            <p className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">
+            <p className="text-muted-foreground text-xs font-medium tracking-[0.18em] uppercase">
               Sections
             </p>
             <div className="space-y-1.5">
-              {adminNavSections.map((section) => (
-                <Link
-                  key={section.key}
-                  href={section.href}
-                  onClick={() => onOpenChange(false)}
-                  className={cn(
-                    "flex items-center gap-3 rounded-xl border px-3 py-3 transition-colors",
-                    section.key === activeSectionKey
-                      ? "border-primary/20 bg-primary/6"
-                      : "border-transparent bg-muted/40 hover:border-border hover:bg-muted/70"
-                  )}
-                >
-                  <section.icon className="size-4" />
-                  <div className="min-w-0">
-                    <div className="text-sm font-semibold">{section.title}</div>
-                    <p className="text-muted-foreground truncate text-xs">
-                      {section.description}
-                    </p>
-                  </div>
-                </Link>
-              ))}
+              {adminNavSections.map((section) => {
+                const isActive = section.key === activeSectionKey
+                const SectionIcon = isActive
+                  ? section.icon.fill
+                  : section.icon.line
+
+                return (
+                  <Link
+                    key={section.key}
+                    href={section.href}
+                    onClick={() => onOpenChange(false)}
+                    className={cn(
+                      "flex items-center gap-3 rounded-xl border px-3 py-3 transition-colors",
+                      isActive
+                        ? "border-primary/20 bg-primary/6"
+                        : "border-transparent bg-muted/40 hover:border-border hover:bg-muted/70"
+                    )}
+                  >
+                    <SectionIcon className="size-4 shrink-0" />
+                    <span className="min-w-0 truncate text-xs font-medium">
+                      {section.title}
+                    </span>
+                  </Link>
+                )
+              })}
             </div>
           </div>
 
           <div className="space-y-2">
-            <p className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">
+            <p className="text-muted-foreground text-xs font-medium tracking-[0.18em] uppercase">
               {activeSection.title}
             </p>
             <div className="space-y-1.5">
-              {activeSection.items.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => onOpenChange(false)}
-                  className={cn(
-                    "block rounded-xl border px-3 py-3 transition-colors",
-                    currentPath === item.href
-                      ? "border-primary/20 bg-primary/6"
-                      : "border-transparent bg-muted/40 hover:border-border hover:bg-muted/70"
-                  )}
-                >
-                  <div className="text-sm font-semibold">{item.title}</div>
-                  {item.description ? (
-                    <p className="text-muted-foreground mt-1 text-xs leading-5">
-                      {item.description}
-                    </p>
-                  ) : null}
-                </Link>
-              ))}
+              {activeSection.items.map((item) => {
+                const isActive = currentPath === item.href
+                const ItemIcon = isActive ? item.icon.fill : item.icon.line
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => onOpenChange(false)}
+                    aria-current={isActive ? "page" : undefined}
+                    className={cn(
+                      "flex items-center gap-2.5 rounded-xl border px-2.5 py-2 transition-colors",
+                      isActive
+                        ? "border-primary/20 bg-primary/6 text-foreground"
+                        : "border-transparent bg-muted/40 text-muted-foreground hover:border-border hover:bg-muted/70 hover:text-foreground"
+                    )}
+                  >
+                    <ItemIcon className="size-4 shrink-0" />
+                    <span className="min-w-0 truncate text-xs font-medium">
+                      {item.title}
+                    </span>
+                  </Link>
+                )
+              })}
             </div>
           </div>
         </div>
