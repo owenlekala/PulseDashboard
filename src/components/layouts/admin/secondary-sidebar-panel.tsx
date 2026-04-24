@@ -27,7 +27,7 @@ export function SecondarySidebarPanel({
     <aside
       className={cn(
         "border-r bg-background sticky top-0 z-40 hidden h-svh shrink-0 self-start overflow-visible transition-[width,border-color] duration-200 md:flex md:flex-col",
-        isOpen ? "w-56 border-border" : "w-6 border-transparent"
+        isOpen ? "w-56 border-border" : "w-0 border-transparent"
       )}
     >
       <Button
@@ -35,7 +35,7 @@ export function SecondarySidebarPanel({
         variant="outline"
         size="icon-sm"
         onClick={() => onOpenChange(!isOpen)}
-        className="bg-background text-muted-foreground hover:text-foreground absolute top-4 right-0 z-50 hidden translate-x-1/2 rounded-full border shadow-sm md:inline-flex"
+        className="bg-background! hover:bg-background! text-muted-foreground hover:text-foreground absolute top-16 right-0 z-50 hidden -translate-y-1/2 translate-x-1/2 rounded-full border shadow-sm md:inline-flex"
         aria-expanded={isOpen}
         aria-label={`${isOpen ? "Close" : "Open"} ${section.title} menu`}
         title={`${isOpen ? "Close" : "Open"} ${section.title} menu`}

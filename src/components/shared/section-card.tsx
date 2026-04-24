@@ -9,12 +9,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { cn } from "@/lib/utils"
 
 interface SectionCardProps {
   title: string
   description?: string
   icon?: LucideIcon
   actions?: React.ReactNode
+  className?: string
   children: React.ReactNode
 }
 
@@ -23,10 +25,11 @@ export function SectionCard({
   description,
   icon: Icon,
   actions,
+  className,
   children,
 }: SectionCardProps) {
   return (
-    <Card>
+    <Card className={cn(className)}>
       <CardHeader className="pb-4">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="space-y-1.5">

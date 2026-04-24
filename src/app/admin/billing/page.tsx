@@ -44,10 +44,11 @@ export default function BillingPage() {
           <SectionCard
             title="Billing Controls"
             description="Utility surfaces for payment governance and policy actions."
+            className="border-0"
             icon={undefined}
           >
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-md border bg-muted/20 p-4">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
                 <div className="mb-2 text-muted-foreground">
                   <BillLine className="size-5" />
                 </div>
@@ -56,7 +57,7 @@ export default function BillingPage() {
                   Automatic reminders are enabled for pending invoices after 3 and 7 days.
                 </p>
               </div>
-              <div className="rounded-md border bg-muted/20 p-4">
+              <div>
                 <div className="mb-2 text-muted-foreground">
                   <SafeLockLine className="size-5" />
                 </div>

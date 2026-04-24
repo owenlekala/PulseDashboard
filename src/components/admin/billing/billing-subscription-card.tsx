@@ -21,6 +21,7 @@ export function BillingSubscriptionCard({
     <SectionCard
       title="Subscription Overview"
       description="Use this section for plan state, renewal timing, and billing entitlements."
+      className="border-0"
       actions={
         <>
           <Button variant="outline" size="sm">
@@ -30,7 +31,7 @@ export function BillingSubscriptionCard({
         </>
       }
     >
-      <div className="space-y-5">
+      <div className="space-y-6">
         <InfoList
           items={[
             { label: "Current Plan", value: subscription.plan },
@@ -39,7 +40,7 @@ export function BillingSubscriptionCard({
             { label: "Renewal Date", value: subscription.renewalDate },
           ]}
         />
-        <div className="rounded-md border bg-muted/20 p-4">
+        <div>
           <div className="mb-2 flex items-center justify-between gap-3">
             <div>
               <p className="text-sm font-medium">Seat usage</p>
